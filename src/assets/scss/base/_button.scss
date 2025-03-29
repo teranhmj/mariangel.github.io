@@ -3,129 +3,36 @@
 // | -------------------------------------------------------------
 
 .button {
-  display: inline-block;
-  padding: 0.75rem 1rem;
-  font-weight: bold;
+  display: inline-flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  transition: all var(--animation-speed-fast) var(--cubic-bezier);
+  cursor: pointer;
+  border: 3px solid light-dark(var(--color-primary-200), var(--color-primary-100));
+  border-radius: 0.25rem;
+  background-color: light-dark(var(--color-primary-200), var(--color-primary-100));
+  padding: 0.75rem 1.5rem;
+  width: fit-content;
+  color: var(--color-neutral-900);
+  font-weight: 700;
   text-decoration: none;
-  text-align: center;
-  color: var(--neutral-900);
-  background-color: var(--primary-100);
-  border: 3px solid var(--primary-100);
-  border-radius: 3px;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
 
-  &:hover,
-  &:focus {
+  &:where(:hover, :focus-visible) {
+    border-color: light-dark(var(--color-primary-300), var(--color-primary-300));
+    background-color: light-dark(var(--color-primary-300), var(--color-primary-300));
     text-decoration: underline;
-    background-color: var(--primary-200);
-    border-color: var(--primary-200);
-  }
-
-  &:visited {
-    color: var(--neutral-900);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.25rem;
   }
 
   &.color-secondary {
-    background-color: var(--secondary-100);
-    border-color: (var(--secondary-100));
+    border-color: light-dark(var(--color-secondary-100), var(--color-secondary-100));
+    background-color: light-dark(var(--color-secondary-100), var(--color-secondary-100));
 
-    &:hover,
-    &:focus {
-      background-color: var(--secondary-400);
-      border-color: var(--secondary-400);
-    }
-  }
-
-  &.color-neutral {
-    background-color: var(--neutral-500);
-    border-color: (var(--neutral-500));
-
-    &:hover,
-    &:focus {
-      background-color: var(--neutral-400);
-      border-color: var(--neutral-400);
-    }
-  }
-
-  &.color-info {
-    background-color: var(--info-300);
-    border-color: (var(--info-300));
-
-    &:hover,
-    &:focus {
-      background-color: var(--info-200);
-      border-color: var(--info-200);
-    }
-  }
-
-  &.color-success {
-    background-color: var(--success-400);
-    border-color: (var(--success-400));
-
-    &:hover,
-    &:focus {
-      background-color: var(--success-300);
-      border-color: var(--success-300);
-    }
-  }
-
-  &.color-warning {
-    background-color: var(--warning-400);
-    border-color: (var(--warning-400));
-
-    &:hover,
-    &:focus {
-      background-color: var(--warning-300);
-      border-color: var(--warning-300);
-    }
-  }
-
-  &.color-error {
-    background-color: var(--error-300);
-    border-color: (var(--error-300));
-
-    &:hover,
-    &:focus {
-      background-color: var(--error-200);
-      border-color: var(--error-200);
-    }
-  }
-
-  &.size-tiny {
-    padding: 0.125rem 0.25rem;
-    font-size: 0.75rem;
-    line-height: 1.125rem;
-  }
-
-  &.size-small {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.875rem;
-    line-height: 1.3125rem;
-  }
-
-  &.size-large {
-    padding: 0.75rem 1rem;
-    font-size: 1.125rem;
-    line-height: 1.6875rem;
-  }
-
-  &.size-huge {
-    padding: 1rem 2rem;
-    font-size: 1.25rem;
-    line-height: 1.875rem;
-  }
-
-  &.behavior-full {
-    display: block;
-    width: 100%;
-  }
-
-  &.type-secondary {
-    background-color: transparent;
-
-    &:hover,
-    &:focus {
-      background-color: transparent;
+    &:where(:hover, :focus-visible) {
+      border-color: light-dark(var(--color-secondary-300), var(--color-secondary-300));
+      background-color: light-dark(var(--color-secondary-300), var(--color-secondary-300));
     }
   }
 
@@ -135,12 +42,8 @@
     gap: 0.5rem;
 
     [data-icon] {
-      height: auto;
       width: 30px;
+      height: auto;
     }
   }
-}
-
-.darkmode .button.type-secondary {
-  color: var(--neutral-100);
 }

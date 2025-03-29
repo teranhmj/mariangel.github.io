@@ -28,15 +28,16 @@ const { src = '/astronaut-hero-img.webp' } = Astro.props
 </section>
 
 <style lang="scss">
-  .text-gradient {
-    background: linear-gradient(315deg, var(--primary-200) 25%, var(--secondary-500));
-    background-clip: border-box;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+  h1 {
+    text-wrap: unset;
   }
 
-  :global(.darkmode .text-gradient) {
-    background: linear-gradient(315deg, var(--primary-200) 25%, var(--secondary-400));
+  .text-gradient {
+    background: linear-gradient(
+      315deg,
+      light-dark(var(--color-primary-300), var(--color-secondary-100)) 25%,
+      light-dark(var(--color-secondary-300), var(--color-primary-200))
+    );
     background-clip: border-box;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;

@@ -1,25 +1,28 @@
-// | -------------------------------------------------------------
-// | > Reset
-// | -------------------------------------------------------------
+/* reset */
 
 html {
   box-sizing: border-box;
   scroll-behavior: smooth;
-
-  @media (prefers-reduced-motion: reduce) {
-    scroll-behavior: auto;
-
-    body * {
-      animation-duration: 0s !important;
-      animation-delay: 0s !important;
-    }
-  }
 }
 
 *,
 *::after,
 *::before {
   box-sizing: inherit;
+}
+
+*:focus,
+*:focus-visible {
+  outline: 2px dashed black;
+  outline-color: black;
+  outline-offset: 0;
+  -webkit-box-shadow: 0 0 0 2px white;
+  box-shadow: 0 0 0 2px white;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+  box-shadow: none;
 }
 
 blockquote,
@@ -50,18 +53,18 @@ input,
 select,
 textarea {
   color: inherit;
-  letter-spacing: inherit;
   font: inherit;
+  letter-spacing: inherit;
 }
 
-input[type="text"],
+input[type='text'],
 textarea {
   width: 100%;
 }
 
 fieldset {
-  padding: 0;
   border: none;
+  padding: 0;
 }
 
 legend {
@@ -69,17 +72,16 @@ legend {
   max-width: 100%;
 }
 
-button,
 input,
 textarea {
   border: 1px solid gray;
 }
 
 button {
-  padding: 0.75em 1em;
+  border: none;
   border-radius: 0;
   background-color: transparent;
-  line-height: 1;
+  padding: 0;
 }
 
 button * {
@@ -115,7 +117,14 @@ noscript {
   margin-bottom: 1em;
 }
 
-[tabindex="-1"] {
+[tabindex='-1'] {
   outline: none !important;
   box-shadow: none !important;
+}
+
+[popover] {
+  position: absolute;
+  inset: auto;
+  border: none;
+  padding: 0;
 }

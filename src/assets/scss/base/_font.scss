@@ -54,37 +54,19 @@
 
 body {
   font-size: 1rem;
-  line-height: 1.5rem;
-  font-family: var(--font-family-default);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
 
-  a:not(.button) {
-    color: var(--action-color);
-    text-decoration: underline;
-
-    &:visited {
-      color: var(--action-color);
-    }
-
-    &:hover,
-    &:focus {
-      color: var(--action-color-state);
-      text-decoration: none;
-    }
+  p {
+    text-wrap: pretty;
   }
 
-  :where(main) a {
-    word-wrap: break-word;
-    word-break: break-word;
-  }
-
-  :where(h1, h2) {
-    font-family: var(--font-family-special);
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+    text-wrap: balance;
   }
 
   h1,
@@ -96,66 +78,36 @@ body {
   h4,
   h5,
   h6 {
-    font-weight: 600;
+    font-weight: 500;
   }
 
   h1 {
-    font-size: 2.25rem;
-    line-height: 3.375rem;
-
-    @include breakpoint(m) {
-      font-size: 3rem;
-      line-height: 3.625rem;
-    }
+    font-size: var(--font-size-6);
+    line-height: var(--font-size-7);
   }
 
   h2 {
-    font-size: 1.875rem;
-    line-height: 2.8125rem;
-
-    @include breakpoint(m) {
-      font-size: 2.25rem;
-      line-height: 3.375rem;
-    }
+    font-size: var(--font-size-5);
+    line-height: var(--font-size-6);
   }
 
   h3 {
-    font-size: 1.5rem;
-    line-height: 2.25rem;
-
-    @include breakpoint(m) {
-      font-size: 1.875rem;
-      line-height: 2.8125rem;
-    }
+    font-size: var(--font-size-4);
+    line-height: var(--font-size-5);
   }
 
   h4 {
-    font-size: 1.25rem;
-    line-height: 1.875rem;
-
-    @include breakpoint(m) {
-      font-size: 1.5rem;
-      line-height: 2.25rem;
-    }
+    font-size: var(--font-size-3);
+    line-height: var(--font-size-4);
   }
 
   h5 {
-    font-size: 1.125rem;
-    line-height: 1.6875rem;
-
-    @include breakpoint(m) {
-      font-size: 1.25rem;
-      line-height: 1.875rem;
-    }
+    font-size: var(--font-size-2);
+    line-height: var(--font-size-3);
   }
 
   h6 {
-    font-size: 1rem;
-    line-height: 1.5rem;
-
-    @include breakpoint(m) {
-      font-size: 1.125rem;
-      line-height: 1.6875rem;
-    }
+    font-size: var(--font-size-1);
+    line-height: var(--font-size-2);
   }
 }

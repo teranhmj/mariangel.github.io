@@ -42,25 +42,23 @@ import { Icon } from 'astro-icon/components'
 </header>
 
 <style lang="scss" is:global>
-  @use '../assets/scss/base/outline' as *;
-
   header {
     .type-icon a {
       display: block;
 
-      [data-icon] {
+      svg {
         margin-top: -4px;
         width: 30px;
         height: auto;
 
         path {
-          fill: var(--action-color);
+          fill: var(--link-color);
         }
       }
 
       &:hover {
-        [data-icon] path {
-          fill: var(--action-color-state);
+        svg path {
+          fill: var(--link-hover-color);
         }
       }
     }

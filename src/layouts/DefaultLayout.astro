@@ -32,33 +32,6 @@ const {
     </main>
     <Footer />
     <style lang="scss" is:global>
-      // theme settings
-      :root {
-        --radius-small: 3px;
-        --radius-large: 6px;
-        --gap-default: 2rem;
-        --font-measure: 70ch;
-        --font-family-default: 'Open Sans', sans-serif;
-        --font-family-special: 'Open Sans', sans-serif;
-        // light theme
-        --font-color: var(--neutral-900);
-        --action-color: var(--primary-300);
-        --action-color-state: var(--primary-500);
-        --background: var(--neutral-100);
-        --primary-background: var(--primary-100);
-        --neutral-background: var(--neutral-200);
-      }
-
-      // dark color scheme overrides
-      .darkmode {
-        --font-color: var(--neutral-100);
-        --action-color: var(--secondary-100);
-        --action-color-state: var(--secondary-500);
-        --background: var(--dark-100);
-        --primary-background: var(--primary-500);
-        --neutral-background: var(--neutral-900);
-      }
-
       // sticky footer on low content pages
       html,
       body {
@@ -68,9 +41,7 @@ const {
       body {
         display: flex;
         flex-direction: column;
-        color: var(--font-color);
-        background-color: var(--background);
-        overflow-x: hidden;
+        overflow-x: clip;
 
         main {
           flex: 1 0 auto;
@@ -82,32 +53,9 @@ const {
       }
 
       pre {
-        padding: 1rem;
+        border: 2px solid var(--link-color);
         border-radius: 0.35rem;
-        border: 2px solid var(--action-color);
-      }
-
-      body .pagination a {
-        &:hover,
-        &:focus-visible {
-          background-color: var(--action-color-state);
-
-          svg path {
-            stroke: white;
-          }
-        }
-      }
-
-      .sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border-width: 0;
+        padding: 1rem;
       }
     </style>
   </body>

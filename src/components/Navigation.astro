@@ -217,7 +217,6 @@ import logo from '../assets/img/logo.svg'
 </script>
 
 <style lang="scss" is:global>
-  @use '../assets/scss/base/breakpoint' as *;
   @use '../assets/scss/base/outline' as *;
 
   #main-navigation {
@@ -332,13 +331,13 @@ import logo from '../assets/img/logo.svg'
         margin-top: -1px;
         border: none;
         padding: 0;
-        color: var(--action-color);
+        color: var(--link-color);
 
         &:hover {
-          color: var(--action-color-state);
+          color: var(--link-hover-color);
 
           &::after {
-            border-color: var(--action-color-state);
+            border-color: var(--link-hover-color);
           }
         }
 
@@ -347,7 +346,7 @@ import logo from '../assets/img/logo.svg'
           margin-top: -0.25rem;
           border-width: 0.2em 0.2em 0 0;
           border-style: solid;
-          border-color: var(--action-color);
+          border-color: var(--link-color);
           width: 0.85rem;
           height: 0.75em;
           content: '';
@@ -370,14 +369,14 @@ import logo from '../assets/img/logo.svg'
       ul {
         display: none;
         position: absolute;
-        top: 125%;
-        right: 0;
-        bottom: auto;
-        left: 0;
         z-index: 100;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        inset-block-start: 150%;
+        inset-inline-end: 0;
+        inset-inline-start: 0;
+        box-shadow: var(--elevation-4);
         border: 2px solid black;
-        background-color: var(--neutral-background);
+        border-radius: var(--radius-large);
+        background-color: var(--background-color);
         padding: 1rem;
         min-width: 260px;
       }
@@ -394,14 +393,15 @@ import logo from '../assets/img/logo.svg'
       }
 
       svg path {
-        fill: var(--action-color);
+        fill: var(--link-color);
+        transition: fill var(--animation-speed-fast) var(--cubic-bezier);
       }
 
-      &:hover {
+      &:where(:hover, :focus-visible) {
         box-shadow: none;
 
         svg path {
-          fill: var(--action-color-state);
+          fill: var(--link-hover-color);
         }
       }
 

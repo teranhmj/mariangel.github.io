@@ -1,7 +1,3 @@
-// | -------------------------------------------------------------
-// | Lists
-// | -------------------------------------------------------------
-
 @use 'breakpoint' as *;
 
 ul:not([class]),
@@ -21,47 +17,47 @@ ol:not([class]) {
 ul:not([class]) {
   > li::marker {
     display: block;
-    color: var(--primary-800);
+    color: var(--color-primary-500);
   }
 }
 
 ol.incremented {
   counter-reset: item;
+}
 
-  ol {
-    counter-reset: item;
+ol.incremented ol {
+  counter-reset: item;
+}
+
+ol.incremented ol,
+ol.incremented ul {
+  margin: 0.75rem 0 0 1rem;
+}
+
+ol.incremented li {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+@media screen and (max-width: 48rem) {
+  ol.incremented li {
+    margin-bottom: 0.75rem;
   }
+}
 
-  ol,
-  ul {
-    margin: 0.75rem 0 0 1rem;
-  }
+ol.incremented li::before {
+  counter-increment: item;
+  content: counters(item, '.') '. ';
+}
 
-  li {
-    display: block;
-    margin-bottom: 0.5rem;
+ol.incremented li:last-child {
+  margin-bottom: 0;
+}
 
-    @include breakpoint(m) {
-      margin-bottom: 0.75rem;
-    }
+ol.incremented li p {
+  display: inline;
+}
 
-    &::before {
-      counter-increment: item;
-      content: counters(item, '.') '. ';
-    }
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-
-    p {
-      display: inline;
-    }
-  }
-
-  ul {
-    li::before {
-      content: '';
-    }
-  }
+ol.incremented ul li::before {
+  content: '';
 }

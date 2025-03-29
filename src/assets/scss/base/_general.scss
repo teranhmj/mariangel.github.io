@@ -1,0 +1,52 @@
+@use './mixins' as *;
+
+@view-transition {
+  navigation: auto;
+}
+
+body {
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-family: var(--font-body);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
+  -webkit-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+a {
+  transition: color var(--animation-speed-fast) var(--cubic-bezier);
+  color: var(--link-color);
+
+  &:where(:hover, :focus-visible) {
+    color: var(--link-hover-color);
+  }
+}
+
+main a:not([class]) {
+  @include text-decoration;
+
+  color: var(--link-color);
+  text-decoration-color: var(--link-color);
+
+  &:where(:hover, :focus-visible) {
+    color: var(--link-hover-color);
+    text-decoration-color: var(--link-hover-color);
+  }
+
+  &.external-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3xs);
+
+    // small visual correction
+    svg {
+      margin-block-start: 3px;
+    }
+  }
+}
