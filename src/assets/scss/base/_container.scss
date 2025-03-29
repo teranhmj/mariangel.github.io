@@ -2,18 +2,18 @@
 // | Container
 // | -------------------------------------------------------------
 
-@use "breakpoint" as *;
+@use 'breakpoint' as *;
 
 .container {
   margin: 0 auto;
   padding: 0 calc(2rem / 2);
   max-width: 100%;
 
-  @include breakpoint(medium) {
+  @include breakpoint(m) {
     padding: 0 2rem;
   }
 
-  @include breakpoint(large) {
+  @include breakpoint(xl) {
     padding: 0 calc(2rem / 2);
     max-width: 1200px;
   }
