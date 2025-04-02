@@ -1,8 +1,9 @@
 <button class="responsive-toggle" aria-expanded="false" aria-label="Open menu navigation">
+  <span>Menu</span>
   <svg width="26" height="21" aria-hidden="true" fill="var(--link-color)" xmlns="http://www.w3.org/2000/svg"
     ><path
       d="M2 1.667h24m-24 8h24m-24 8h24"
-      stroke="var(--link-color)"
+      stroke="var(--text-color)"
       stroke-width="2.667"
       stroke-linecap="round"
       stroke-linejoin="round"></path></svg
@@ -16,15 +17,21 @@
 
     // functions
     const openMenu = (toggle) => {
+      const text = toggle.querySelector('span')
+      const icon = toggle.querySelector('svg')
+      text.textContent = 'Close'
       toggle.setAttribute('aria-expanded', true)
       toggle.setAttribute('aria-label', 'Close menu navigation')
-      toggle.innerHTML = `<svg width="20" height="20" aria-hidden="true" fill="var(--link-color)" xmlns="http://www.w3.org/2000/svg"><path d="M10 10 2 2m8 8 8 8m-8-8 8-8m-8 8-8 8" stroke="var(--link-color)" stroke-width="2.667" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+      icon.innerHTML = `<path d="M10 10 2 2m8 8 8 8m-8-8 8-8m-8 8-8 8" stroke="var(--text-color)" stroke-width="2.667" stroke-linecap="round" stroke-linejoin="round"/>`
     }
 
     const closeMenu = (toggle) => {
+      const text = toggle.querySelector('span')
+      const icon = toggle.querySelector('svg')
+      text.textContent = 'Menu'
       toggle.setAttribute('aria-expanded', false)
       toggle.setAttribute('aria-label', 'Open menu navigation')
-      toggle.innerHTML = `<svg width="26" height="21" aria-hidden="true" fill="var(--link-color)" xmlns="http://www.w3.org/2000/svg"><path d="M2 1.667h24m-24 8h24m-24 8h24" stroke="var(--link-color)" stroke-width="2.667" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+      icon.innerHTML = `<path d="M2 1.667h24m-24 8h24m-24 8h24" stroke="var(--text-color)" stroke-width="2.667" stroke-linecap="round" stroke-linejoin="round"/>`
     }
 
     // execution
@@ -45,6 +52,7 @@
     padding: 0;
 
     svg {
+      margin-block-start: 4px;
       width: 30px;
 
       path {
@@ -52,9 +60,12 @@
       }
     }
 
-    &:hover {
-      svg path {
-        fill: var(--color-primary-400);
+    &:where(:hover, :focus-visible) {
+      span {
+        text-decoration: underline;
+        text-decoration-style: wavy;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 7px;
       }
     }
   }

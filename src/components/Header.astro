@@ -1,6 +1,6 @@
 ---
 import Navigation from '../components/Navigation.astro'
-import { SkipLink } from 'accessible-astro-components'
+import { DarkMode, SkipLink } from 'accessible-astro-components'
 import { Icon } from 'astro-icon/components'
 ---
 
@@ -30,26 +30,29 @@ import { Icon } from 'astro-icon/components'
         </li>
       </ul>
     </li>
-    <li class="menu-item">
-      <a href="https://accessible-astro.incluud.dev/" rel="external">Docs</a>
+    <li class="menu-item highlight">
+      <a href="https://accessible-astro.incluud.dev/">Docs </a>
     </li>
-    <li class="menu-item type-icon">
+    <li class="menu-item type-icon animate-rotate">
       <a href="https://github.com/markteekman/accessible-astro-starter" title="Go to the GitHub page">
         <Icon name="ion:logo-github" />
       </a>
+    </li>
+    <li class="menu-item type-icon animate-rotate">
+      <DarkMode />
     </li>
   </Navigation>
 </header>
 
 <style lang="scss" is:global>
   header {
-    .type-icon a {
+    .type-icon {
       display: block;
+      margin-inline: -7px;
 
       svg {
-        margin-top: -4px;
-        width: 30px;
-        height: auto;
+        inline-size: 30px;
+        block-size: 30px;
 
         path {
           fill: var(--link-color);

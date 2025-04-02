@@ -1,6 +1,5 @@
 ---
 import ResponsiveToggle from './ResponsiveToggle.astro'
-import { DarkMode } from 'accessible-astro-components'
 import { Image } from 'astro:assets'
 import logo from '../assets/img/logo.svg'
 ---
@@ -17,7 +16,6 @@ import logo from '../assets/img/logo.svg'
           <slot />
         </ul>
       </nav>
-      <DarkMode />
       <ResponsiveToggle />
     </div>
     <nav class="mobile-menu" aria-label="Main navigation mobile">
@@ -32,6 +30,8 @@ import logo from '../assets/img/logo.svg'
   document.addEventListener('astro:page-load', () => {
     // variables
     const mainNav = document.querySelector('#main-navigation')
+    if (!mainNav) return
+
     const mainMenu = mainNav.querySelector('ul')
     const dropdownMenus = [...document.querySelectorAll('.has-dropdown button')]
 
@@ -57,7 +57,10 @@ import logo from '../assets/img/logo.svg'
 
     const checkMenuSize = () => {
       const mainNavWidth = mainNav.getBoundingClientRect().width
-      const desktopMenuWidth = document.querySelector('.desktop-menu').getBoundingClientRect().width
+      const desktopMenuEl = document.querySelector('.desktop-menu')
+      if (!desktopMenuEl) return
+
+      const desktopMenuWidth = desktopMenuEl.getBoundingClientRect().width
       const logoWidthBuffer = 300
       const totalMenuWidth = Math.round(desktopMenuWidth) + logoWidthBuffer
 
@@ -114,23 +117,23 @@ import logo from '../assets/img/logo.svg'
         const menuItems = [...mainMenu.querySelectorAll('.menu-item')]
         const currentDropdownMenu = element.closest('.has-dropdown button')
         const currentDropdownMenuItem = element.closest('.has-dropdown li')
-        const currentIndex = menuItems.findIndex((item) => item === currentMenuItem)
+        const currentIndex = currentMenuItem ? menuItems.findIndex((item) => item === currentMenuItem) : -1
 
         const key = event.key
         let targetItem
 
         if (key === 'ArrowRight') {
-          if (menuItems.indexOf(currentMenuItem) === menuItems.length - 1) {
+          if (currentMenuItem && menuItems.indexOf(currentMenuItem) === menuItems.length - 1) {
             targetItem = menuItems[0]
-          } else {
+          } else if (currentMenuItem) {
             targetItem = menuItems[currentIndex + 1]
           }
         }
 
         if (key === 'ArrowLeft') {
-          if (menuItems.indexOf(currentMenuItem) === 0) {
+          if (currentMenuItem && menuItems.indexOf(currentMenuItem) === 0) {
             targetItem = menuItems[menuItems.length - 1]
-          } else {
+          } else if (currentMenuItem) {
             targetItem = menuItems[currentIndex - 1]
           }
         }
@@ -140,12 +143,15 @@ import logo from '../assets/img/logo.svg'
         }
 
         if (currentDropdownMenu) {
-          const firstDropdownItem = currentDropdownMenu.nextElementSibling.querySelector('li')
+          const nextElement = currentDropdownMenu.nextElementSibling
+          if (nextElement) {
+            const firstDropdownItem = nextElement.querySelector('li')
 
-          if (key === 'ArrowDown') {
-            event.preventDefault()
-            openDropdownMenu(currentDropdownMenu)
-            targetItem = firstDropdownItem
+            if (key === 'ArrowDown') {
+              event.preventDefault()
+              openDropdownMenu(currentDropdownMenu)
+              targetItem = firstDropdownItem
+            }
           }
 
           if (key === 'Escape') {
@@ -155,46 +161,60 @@ import logo from '../assets/img/logo.svg'
 
         if (currentDropdownMenuItem) {
           const currentDropdownList = currentDropdownMenuItem.parentNode
-          const dropdownMenuItems = [...currentDropdownList.querySelectorAll('li')]
-          const currentIndex = dropdownMenuItems.findIndex((item) => item === currentDropdownMenuItem)
+          if (currentDropdownList) {
+            const dropdownMenuItems = [...(currentDropdownList as Element).querySelectorAll('li')]
+            const currentIndex = dropdownMenuItems.findIndex((item) => item === currentDropdownMenuItem)
 
-          if (key === 'ArrowDown') {
-            event.preventDefault()
+            if (key === 'ArrowDown') {
+              event.preventDefault()
 
-            if (dropdownMenuItems.indexOf(currentDropdownMenuItem as HTMLLIElement) === dropdownMenuItems.length - 1) {
-              targetItem = dropdownMenuItems[0]
-            } else {
-              targetItem = dropdownMenuItems[currentIndex + 1]
+              if (
+                dropdownMenuItems.indexOf(currentDropdownMenuItem as HTMLLIElement) ===
+                dropdownMenuItems.length - 1
+              ) {
+                targetItem = dropdownMenuItems[0]
+              } else {
+                targetItem = dropdownMenuItems[currentIndex + 1]
+              }
             }
-          }
 
-          if (key === 'ArrowUp') {
-            event.preventDefault()
+            if (key === 'ArrowUp') {
+              event.preventDefault()
 
-            if (dropdownMenuItems.indexOf(currentDropdownMenuItem as HTMLLIElement) === 0) {
-              targetItem = dropdownMenuItems[dropdownMenuItems.length - 1]
-            } else {
-              targetItem = dropdownMenuItems[currentIndex - 1]
+              if (dropdownMenuItems.indexOf(currentDropdownMenuItem as HTMLLIElement) === 0) {
+                targetItem = dropdownMenuItems[dropdownMenuItems.length - 1]
+              } else {
+                targetItem = dropdownMenuItems[currentIndex - 1]
+              }
             }
-          }
 
-          if (key === 'Escape') {
-            const currentDropdownMenu = (currentDropdownList as Element).previousElementSibling
-            targetItem = currentDropdownMenu.parentNode
-            closeAllDropdownMenus()
-          }
+            if (key === 'Escape') {
+              const currentDropdownMenu = (currentDropdownList as Element).previousElementSibling
+              if (currentDropdownMenu) {
+                targetItem = currentDropdownMenu.parentNode
+                closeAllDropdownMenus()
+              }
+            }
 
-          if (key === 'Tab') {
-            const currentDropdownMenu = (currentDropdownList as Element).previousElementSibling
-
-            if (dropdownMenuItems.indexOf(currentDropdownMenuItem as HTMLLIElement) === dropdownMenuItems.length - 1) {
-              closeDropdownMenu(currentDropdownMenu)
+            if (key === 'Tab') {
+              const currentDropdownMenu = (currentDropdownList as Element).previousElementSibling
+              if (currentDropdownMenu) {
+                if (
+                  dropdownMenuItems.indexOf(currentDropdownMenuItem as HTMLLIElement) ===
+                  dropdownMenuItems.length - 1
+                ) {
+                  closeDropdownMenu(currentDropdownMenu as Element)
+                }
+              }
             }
           }
         }
 
         if (targetItem) {
-          targetItem.querySelector('a, button, input').focus()
+          const focusableElement = targetItem.querySelector('a, button, input')
+          if (focusableElement) {
+            focusableElement.focus()
+          }
         }
       })
 
@@ -217,7 +237,7 @@ import logo from '../assets/img/logo.svg'
 </script>
 
 <style lang="scss" is:global>
-  @use '../assets/scss/base/outline' as *;
+  @use '../assets/scss/base/mixins' as *;
 
   #main-navigation {
     > .container {
@@ -234,10 +254,6 @@ import logo from '../assets/img/logo.svg'
 
       .mobile-menu {
         display: none;
-      }
-
-      .darkmode-toggle {
-        margin-top: -6px;
       }
     }
 
@@ -260,7 +276,9 @@ import logo from '../assets/img/logo.svg'
       }
 
       .responsive-toggle {
-        display: block;
+        display: flex;
+        align-items: center;
+        gap: var(--space-2xs);
       }
     }
 
@@ -270,24 +288,26 @@ import logo from '../assets/img/logo.svg'
       gap: 1rem;
     }
 
+    a,
+    button {
+      color: var(--text-color);
+      font-size: 1.125rem;
+      line-height: 1.6875rem;
+      text-decoration: none;
+    }
+
     nav {
       > ul {
         display: flex;
-        gap: 1.5rem;
+        gap: var(--space-m);
         list-style-type: none;
 
-        a,
-        button {
-          font-size: 1.125rem;
-          line-height: 1.6875rem;
-          text-decoration: none;
-        }
-
         a:hover,
-        a:focus,
+        a:focus-visible,
         .is-active,
+        button[aria-expanded='true'],
         .has-dropdown > button:hover,
-        .has-dropdown > button:focus {
+        .has-dropdown > button:focus-visible {
           text-decoration: underline;
           text-decoration-style: wavy;
           text-decoration-thickness: 1px;
@@ -296,6 +316,23 @@ import logo from '../assets/img/logo.svg'
 
         .is-active {
           font-weight: bold;
+        }
+
+        .highlight a {
+          display: inline-flex;
+          align-items: center;
+          gap: var(--space-2xs);
+          transition: all var(--animation-speed-fast) var(--cubic-bezier);
+          margin-block-start: calc(var(--space-4xs) * -1);
+          border: 1px solid var(--text-color);
+          border-radius: var(--radius-large);
+          padding: var(--space-4xs) var(--space-2xs);
+          text-decoration: none;
+
+          &:where(:hover, :focus-visible) {
+            background-color: var(--text-color);
+            color: var(--background-color) !important;
+          }
         }
       }
     }
@@ -306,6 +343,7 @@ import logo from '../assets/img/logo.svg'
 
       > ul {
         flex-direction: column;
+        align-items: flex-start;
 
         ul {
           position: relative;
@@ -329,24 +367,14 @@ import logo from '../assets/img/logo.svg'
         align-items: center;
         gap: 0.5rem;
         margin-top: -1px;
-        border: none;
-        padding: 0;
-        color: var(--link-color);
-
-        &:hover {
-          color: var(--link-hover-color);
-
-          &::after {
-            border-color: var(--link-hover-color);
-          }
-        }
 
         &::after {
           transform: rotate(135deg);
+          transition: all var(--animation-speed-instant) var(--cubic-bezier);
           margin-top: -0.25rem;
           border-width: 0.2em 0.2em 0 0;
           border-style: solid;
-          border-color: var(--link-color);
+          border-color: var(--text-color);
           width: 0.85rem;
           height: 0.75em;
           content: '';
@@ -354,14 +382,8 @@ import logo from '../assets/img/logo.svg'
 
         &.show {
           &::after {
-            transform: rotate(-45deg);
+            scale: -1;
             margin-top: 0.25rem;
-          }
-
-          ~ ul {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
           }
         }
       }
@@ -369,8 +391,9 @@ import logo from '../assets/img/logo.svg'
       ul {
         display: none;
         position: absolute;
+        translate: 0 1rem;
         z-index: 100;
-        inset-block-start: 150%;
+        inset-block-start: 125%;
         inset-inline-end: 0;
         inset-inline-start: 0;
         box-shadow: var(--elevation-4);
@@ -379,6 +402,28 @@ import logo from '../assets/img/logo.svg'
         background-color: var(--background-color);
         padding: 1rem;
         min-width: 260px;
+
+        @media (prefers-reduced-motion: no-preference) {
+          transition-behavior: allow-discrete;
+          transition-duration: var(--animation-speed-fast);
+          transition-property: display, opacity, translate;
+          transition-timing-function: var(--cubic-bezier);
+        }
+      }
+
+      > button.show ~ ul {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        translate: 0;
+        opacity: 1;
+
+        @media (prefers-reduced-motion: no-preference) {
+          @starting-style {
+            translate: 0 1rem;
+            opacity: 0;
+          }
+        }
       }
     }
 
@@ -387,13 +432,12 @@ import logo from '../assets/img/logo.svg'
       padding: 0;
 
       .icon {
-        margin-top: 4px;
         inline-size: 30px;
         block-size: 30px;
       }
 
       svg path {
-        fill: var(--link-color);
+        fill: var(--text-color);
         transition: fill var(--animation-speed-fast) var(--cubic-bezier);
       }
 
@@ -401,7 +445,7 @@ import logo from '../assets/img/logo.svg'
         box-shadow: none;
 
         svg path {
-          fill: var(--link-hover-color);
+          fill: var(--text-color);
         }
       }
 
