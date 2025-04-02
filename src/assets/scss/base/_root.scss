@@ -137,9 +137,10 @@
 
   // animations
   --cubic-bezier: cubic-bezier(0.1, 0.1, 0, 1);
-  --animation-speed-slow: 0.6s;
-  --animation-speed-medium: 0.4s;
-  --animation-speed-fast: 0.25s;
+  --animation-speed-slow: 0.4s;
+  --animation-speed-medium: 0.3s;
+  --animation-speed-fast: 0.2s;
+  --animation-speed-instant: 0.1s;
 
   // misc
   --line-clamp: 3;

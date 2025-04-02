@@ -50,3 +50,13 @@ main a:not([class]) {
     }
   }
 }
+
+*:focus,
+*:focus-visible {
+  @include outline;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+  box-shadow: none;
+}

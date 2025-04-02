@@ -1,13 +1,13 @@
 @mixin text-decoration($color: var(--text-decoration-color), $hoverColor: var(--text-decoration-hover-color)) {
-  text-decoration: underline;
-  text-decoration-style: solid;
-  text-decoration-thickness: 2px;
-  text-decoration-color: $color;
-  text-decoration-skip-ink: none;
-  text-underline-offset: 4px;
   transition: text-decoration, text-underline-offset, text-decoration-color, text-decoration-thickness;
   transition-duration: var(--animation-speed-fast);
   transition-timing-function: var(--cubic-bezier);
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-decoration-color: $color;
+  text-decoration-thickness: 2px;
+  text-decoration-skip-ink: none;
+  text-underline-offset: 4px;
 
   &:where(:hover, :focus-visible) {
     text-decoration-color: $hoverColor;
@@ -24,16 +24,16 @@
   box-shadow: 0 0 0 2px white;
 }
 
-@mixin visually-hidden {
+@mixin sr-only {
   position: absolute;
+  margin: -1px;
+  padding: 0;
   width: 1px;
   height: 1px;
-  padding: 0;
-  margin: -1px;
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
   border-width: 0;
+  white-space: nowrap;
 }
 
 @mixin rotate-icon-on-hover {
