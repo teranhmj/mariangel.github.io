@@ -28,7 +28,8 @@ a {
   }
 }
 
-main a:not([class]) {
+main a,
+footer a {
   @include text-decoration;
 
   color: var(--link-color);

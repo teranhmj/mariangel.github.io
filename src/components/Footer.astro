@@ -1,5 +1,6 @@
 ---
 import CallToAction from './CallToAction.astro'
+import ExternalLink from './ExternalLink.astro'
 
 const currentYear = new Date().getFullYear()
 ---
@@ -30,10 +31,22 @@ const currentYear = new Date().getFullYear()
       <div class="flex flex-col gap-4">
         <h3 class="text-2xl font-bold">Developer Tools</h3>
         <ul class="flex flex-col gap-2">
-          <li><a href="/aria-practices">ARIA Best Practices</a></li>
-          <li><a href="/focus-management">Focus Management</a></li>
-          <li><a href="/semantic-html">Semantic HTML Guide</a></li>
-          <li><a href="/screen-reader-testing">Screen Reader Testing</a></li>
+          <li>
+            <ExternalLink href="https://www.w3.org/WAI/ARIA/apg/">ARIA Authoring Practices</ExternalLink>
+          </li>
+          <li>
+            <ExternalLink href="https://web.dev/articles/focus">Focus Management</ExternalLink>
+          </li>
+          <li>
+            <ExternalLink href="https://developer.mozilla.org/en-US/docs/Learn/Accessibility/HTML"
+              >Semantic HTML Guide</ExternalLink
+            >
+          </li>
+          <li>
+            <ExternalLink href="https://www.tpgi.com/screen-reader-user-survey-results/"
+              >Screen Reader Survey</ExternalLink
+            >
+          </li>
         </ul>
       </div>
       <div class="flex flex-col gap-4">
