@@ -1,15 +1,11 @@
 ---
 import ResponsiveToggle from './ResponsiveToggle.astro'
-import { Image } from 'astro:assets'
-import logo from '../assets/img/logo.svg'
+import Logo from './Logo.astro'
 ---
 
 <div id="main-navigation" class="is-desktop py-8">
   <div class="container">
-    <a href="/" class="flex items-center gap-2 !no-underline">
-      <Image src={logo} alt="Your Logo" width="47" height="37" />
-      <span class="font-bold">Accessible Astro</span>
-    </a>
+    <Logo />
     <div class="wrapper">
       <nav class="desktop-menu" aria-label="Main navigation desktop">
         <ul class="menu">
@@ -290,7 +286,7 @@ import logo from '../assets/img/logo.svg'
 
     a,
     button {
-      color: var(--text-color);
+      color: var(--foreground-color);
       font-size: 1.125rem;
       line-height: 1.6875rem;
       text-decoration: none;
@@ -324,13 +320,13 @@ import logo from '../assets/img/logo.svg'
           gap: var(--space-2xs);
           transition: all var(--animation-speed-fast) var(--cubic-bezier);
           margin-block-start: calc(var(--space-4xs) * -1);
-          border: 1px solid var(--text-color);
+          border: 1px solid var(--foreground-color);
           border-radius: var(--radius-large);
           padding: var(--space-4xs) var(--space-2xs);
           text-decoration: none;
 
           &:where(:hover, :focus-visible) {
-            background-color: var(--text-color);
+            background-color: var(--foreground-color);
             color: var(--background-color) !important;
           }
         }
@@ -365,25 +361,16 @@ import logo from '../assets/img/logo.svg'
       > button {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: var(--space-4xs);
         margin-top: -1px;
 
-        &::after {
-          transform: rotate(135deg);
+        svg {
           transition: all var(--animation-speed-instant) var(--cubic-bezier);
-          margin-top: -0.25rem;
-          border-width: 0.2em 0.2em 0 0;
-          border-style: solid;
-          border-color: var(--text-color);
-          width: 0.85rem;
-          height: 0.75em;
-          content: '';
         }
 
         &.show {
-          &::after {
+          svg {
             scale: -1;
-            margin-top: 0.25rem;
           }
         }
       }
@@ -397,11 +384,11 @@ import logo from '../assets/img/logo.svg'
         inset-inline-end: 0;
         inset-inline-start: 0;
         box-shadow: var(--elevation-4);
-        border: 2px solid black;
+        border: 2px solid var(--border-color-subtle);
         border-radius: var(--radius-large);
         background-color: var(--background-color);
-        padding: 1rem;
-        min-width: 260px;
+        padding: var(--space-m);
+        min-inline-size: 260px;
 
         @media (prefers-reduced-motion: no-preference) {
           transition-behavior: allow-discrete;
@@ -437,7 +424,7 @@ import logo from '../assets/img/logo.svg'
       }
 
       svg path {
-        fill: var(--text-color);
+        fill: var(--foreground-color);
         transition: fill var(--animation-speed-fast) var(--cubic-bezier);
       }
 
@@ -445,7 +432,7 @@ import logo from '../assets/img/logo.svg'
         box-shadow: none;
 
         svg path {
-          fill: var(--text-color);
+          fill: var(--foreground-color);
         }
       }
 

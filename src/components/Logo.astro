@@ -1,0 +1,29 @@
+---
+import { Image } from 'astro:assets'
+import logo from '../assets/img/logo.svg'
+
+/**
+ * Logo Component
+ *
+ * @description Logo description
+ */
+interface Props {
+  /**
+   * Additional classes to apply to the Logo
+   */
+  class?: string
+}
+
+const { class: className } = Astro.props
+---
+
+<a href="/" class="flex items-center gap-2 !no-underline">
+  <Image src={logo} alt="Your Logo" width="47" height="37" />
+  <span class="font-bold">Accessible Astro</span>
+</a>
+
+<style lang="scss">
+  a {
+    color: var(--foreground-color);
+  }
+</style>
