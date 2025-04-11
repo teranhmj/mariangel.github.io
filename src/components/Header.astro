@@ -17,7 +17,10 @@ import { Icon } from 'astro-icon/components'
       <a href="/portfolio/">Portfolio</a>
     </li>
     <li class="menu-item has-dropdown">
-      <button aria-haspopup="true" aria-expanded="false">Example Pages</button>
+      <button aria-haspopup="true" aria-expanded="false">
+        Example Pages
+        <Icon name="lucide:chevron-down" size="32" />
+      </button>
       <ul class="dropdown-menu">
         <li class="submenu-item">
           <a href="/mdx-page/">MDX Page</a>
@@ -35,11 +38,14 @@ import { Icon } from 'astro-icon/components'
     </li>
     <li class="menu-item type-icon animate-rotate">
       <a href="https://github.com/markteekman/accessible-astro-starter" title="Go to the GitHub page">
-        <Icon name="ion:logo-github" />
+        <Icon name="lucide:github" />
       </a>
     </li>
     <li class="menu-item type-icon animate-rotate">
-      <DarkMode />
+      <DarkMode>
+        <Icon name="lucide:moon" slot="light" />
+        <Icon name="lucide:sun" slot="dark" />
+      </DarkMode>
     </li>
   </Navigation>
 </header>
