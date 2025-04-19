@@ -53,12 +53,12 @@
   --radius-large: 6px;
   --gap-default: 2rem;
   --font-measure: 70ch;
-  --font-family-default: 'Open Sans', sans-serif;
-  --font-family-special: 'Open Sans', sans-serif;
+  --font-family-default: 'Atkinson Hyperlegible', sans-serif;
+  --font-family-special: 'Atkinson Hyperlegible', sans-serif;
 
   // font families
-  --font-heading: 'Open Sans', sans-serif;
-  --font-body: 'Open Sans', sans-serif;
+  --font-heading: var(--font-family-special);
+  --font-body: var(--font-family-default);
 
   // font sizes
   // @link https://utopia.fyi/type/calculator?c=320,16,1.2,1240,18,1.25,6,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12
