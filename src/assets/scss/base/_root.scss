@@ -2,51 +2,44 @@
   color-scheme: light;
   interpolate-size: allow-keywords;
 
-  // oklch colors
-  --lch-primary-100: 90% 0.3 310;
-  --lch-primary-200: 80% 0.3 310;
-  --lch-primary-300: 70% 0.3 310;
-  --lch-primary-400: 60% 0.3 310;
-  --lch-primary-500: 50% 0.3 310;
-  --lch-secondary-100: 90% 0.3 185;
-  --lch-secondary-200: 80% 0.3 185;
-  --lch-secondary-300: 70% 0.3 185;
-  --lch-secondary-400: 60% 0.3 185;
-  --lch-secondary-500: 50% 0.3 185;
-  --lch-background-light: 90% 0 0;
-  --lch-background-dark: 10% 0 0;
-  --lch-neutral-100: 100% 0 0;
-  --lch-neutral-200: 95% 0.01 250;
-  --lch-neutral-300: 90% 0.01 250;
-  --lch-neutral-400: 85% 0.01 250;
-  --lch-neutral-500: 80% 0.01 250;
-  --lch-neutral-600: 60% 0.01 250;
-  --lch-neutral-700: 40% 0.01 250;
-  --lch-neutral-800: 30% 0.01 250;
-  --lch-neutral-900: 15% 0.01 250;
+  // brand colors (change these to your own brand colors)
+  --brand-primary: #d648ff;
+  --brand-secondary: #00d1b7;
+  --brand-neutral: #b9bec4;
 
-  // colors brand
-  --color-primary-100: oklch(var(--lch-primary-100));
-  --color-primary-200: oklch(var(--lch-primary-200));
-  --color-primary-300: oklch(var(--lch-primary-300));
-  --color-primary-400: oklch(var(--lch-primary-400));
-  --color-primary-500: oklch(var(--lch-primary-500));
-  --color-secondary-100: oklch(var(--lch-secondary-100));
-  --color-secondary-200: oklch(var(--lch-secondary-200));
-  --color-secondary-300: oklch(var(--lch-secondary-300));
-  --color-secondary-400: oklch(var(--lch-secondary-400));
-  --color-secondary-500: oklch(var(--lch-secondary-500));
+  // pallet brand
+  --color-primary-100: oklch(from var(--brand-primary) 90% c h);
+  --color-primary-200: oklch(from var(--brand-primary) 80% c h);
+  --color-primary-300: oklch(from var(--brand-primary) 70% c h);
+  --color-primary-400: oklch(from var(--brand-primary) 60% c h);
+  --color-primary-500: oklch(from var(--brand-primary) 50% c h);
+  --color-secondary-100: oklch(from var(--brand-secondary) 90% c h);
+  --color-secondary-200: oklch(from var(--brand-secondary) 80% c h);
+  --color-secondary-300: oklch(from var(--brand-secondary) 70% c h);
+  --color-secondary-400: oklch(from var(--brand-secondary) 60% c h);
+  --color-secondary-500: oklch(from var(--brand-secondary) 50% c h);
 
-  // Add neutral colors from _color.scss
-  --color-neutral-100: oklch(var(--lch-neutral-100));
-  --color-neutral-200: oklch(var(--lch-neutral-200));
-  --color-neutral-300: oklch(var(--lch-neutral-300));
-  --color-neutral-400: oklch(var(--lch-neutral-400));
-  --color-neutral-500: oklch(var(--lch-neutral-500));
-  --color-neutral-600: oklch(var(--lch-neutral-600));
-  --color-neutral-700: oklch(var(--lch-neutral-700));
-  --color-neutral-800: oklch(var(--lch-neutral-800));
-  --color-neutral-900: oklch(var(--lch-neutral-900));
+  // pallet neutral
+  --color-neutral-100: oklch(from var(--brand-neutral) 100% 0 0);
+  --color-neutral-200: oklch(from var(--brand-neutral) 95% c h);
+  --color-neutral-300: oklch(from var(--brand-neutral) 90% c h);
+  --color-neutral-400: oklch(from var(--brand-neutral) 85% c h);
+  --color-neutral-500: oklch(from var(--brand-neutral) 80% c h);
+  --color-neutral-600: oklch(from var(--brand-neutral) 60% c h);
+  --color-neutral-700: oklch(from var(--brand-neutral) 40% c h);
+  --color-neutral-800: oklch(from var(--brand-neutral) 30% c h);
+  --color-neutral-900: oklch(from var(--brand-neutral) 15% c h);
+
+  // color scheme
+  --foreground-color: light-dark(var(--color-neutral-800), var(--color-neutral-100));
+  --background-color: light-dark(var(--color-neutral-100), var(--color-neutral-900));
+  --icon-color: light-dark(var(--color-neutral-800), var(--color-neutral-100));
+  --link-color: light-dark(var(--color-primary-400), var(--color-secondary-100));
+  --link-hover-color: light-dark(var(--color-primary-300), var(--color-secondary-200));
+  --border-color: light-dark(var(--color-neutral-900), var(--color-neutral-100));
+  --border-color-subtle: light-dark(var(--color-neutral-300), var(--color-neutral-800));
+  --text-decoration-color: light-dark(var(--color-neutral-700), var(--color-neutral-100));
+  --text-decoration-color-hover: light-dark(var(--color-neutral-100), var(--color-neutral-200));
 
   // theme settings
   --radius-small: 3px;
@@ -148,17 +141,6 @@
   --target-size-max: 44px;
   --backdrop-color: hsl(0deg 100% 0% / 0.75);
   --backdrop-blur: blur(3px);
-
-  // defaults
-  --foreground-color: light-dark(var(--color-neutral-800), var(--color-neutral-100));
-  --background-color: light-dark(var(--color-neutral-100), var(--color-neutral-900));
-  --icon-color: light-dark(var(--color-neutral-800), var(--color-neutral-100));
-  --link-color: light-dark(var(--color-primary-400), var(--color-secondary-100));
-  --link-hover-color: light-dark(var(--color-primary-300), var(--color-secondary-200));
-  --border-color: light-dark(var(--color-neutral-900), var(--color-neutral-100));
-  --border-color-subtle: light-dark(var(--color-neutral-300), var(--color-neutral-800));
-  --text-decoration-color: light-dark(var(--color-neutral-700), var(--color-neutral-100));
-  --text-decoration-color-hover: light-dark(var(--color-neutral-100), var(--color-neutral-200));
 
   // kbd
   --kbd-color-text: light-dark(var(--color-gray-200), var(--color-gray-800));
