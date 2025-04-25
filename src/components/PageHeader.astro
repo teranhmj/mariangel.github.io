@@ -1,0 +1,107 @@
+---
+import { Breadcrumbs, BreadcrumbsItem } from 'accessible-astro-components'
+
+/**
+ * PageHeader Component
+ *
+ * @description PageHeader description
+ */
+interface Props {
+  /**
+   * Additional classes to apply to the PageHeader
+   */
+  class?: string
+  /**
+   * The title of the page
+   */
+  title: string
+  /**
+   * The subtitle of the page
+   */
+  subtitle?: string
+  /**
+   * The background color of the page header
+   * @type {'primary' | 'secondary' | 'neutral' | 'gradient' | undefined}
+   * @default undefined - Uses the default background color
+   */
+  bgColor?: 'primary' | 'secondary' | 'neutral' | 'gradient'
+  /**
+   * Whether to show the breadcrumbs
+   */
+  showBreadcrumbs?: boolean
+  /**
+   * Whether to show the border
+   */
+  showBorder?: boolean
+}
+
+const { class: className, title, subtitle, bgColor, showBreadcrumbs = true, showBorder = false } = Astro.props
+---
+
+<section class:list={[className, 'page-header']}>
+  <div class="container mb-3">
+    {
+      showBreadcrumbs &&
+        (() => {
+          const path = Astro.url.pathname
+          const segments = path.split('/').filter(Boolean)
+
+          if (segments.length === 0) {
+            return null // No breadcrumbs on homepage
+          }
+
+          return (
+            <Breadcrumbs>
+              <BreadcrumbsItem href="/" label="Home" />
+              {segments.map((segment, index) => {
+                const url = `/${segments.slice(0, index + 1).join('/')}`
+                const isLast = index === segments.length - 1
+                const formattedName = segment
+                  .split('-')
+                  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                  .join(' ')
+
+                return <BreadcrumbsItem href={isLast ? undefined : url} label={formattedName} currentPage={isLast} />
+              })}
+            </Breadcrumbs>
+          )
+        })()
+    }
+  </div>
+  <div class:list={['py-16', bgColor && `bg-${bgColor}`, showBorder && 'border']}>
+    <div class="space-content container">
+      <h1>{title}</h1>
+      {subtitle && <p class="text-2xl">{subtitle}</p>}
+    </div>
+  </div>
+</section>
+
+<style>
+  .page-header {
+    .bg-primary {
+      background-color: light-dark(var(--color-primary-100), var(--color-primary-500));
+    }
+
+    .bg-secondary {
+      background-color: light-dark(var(--color-secondary-100), var(--color-secondary-500));
+    }
+
+    .bg-neutral {
+      background-color: light-dark(var(--color-neutral-300), var(--color-neutral-800));
+    }
+
+    .bg-gradient {
+      background-image: linear-gradient(
+        315deg,
+        light-dark(var(--color-primary-100), var(--color-secondary-100)) 25%,
+        light-dark(var(--color-secondary-100), var(--color-primary-200))
+      );
+      color: var(--color-neutral-900);
+    }
+
+    .border {
+      border: 1px solid var(--border-color-subtle);
+      border-inline: 0;
+    }
+  }
+</style>

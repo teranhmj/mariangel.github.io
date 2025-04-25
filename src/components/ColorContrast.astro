@@ -5,6 +5,9 @@ interface Props {
 
 const { class: className } = Astro.props
 
+// Import Tabs components
+import { Tabs, TabsList, TabsTab, TabsPanel } from 'accessible-astro-components'
+
 // Define color variants to test
 const colorGroups = [
   { name: 'Primary', prefix: 'primary', values: [100, 200, 300, 400, 500] },
@@ -16,12 +19,14 @@ const colorGroups = [
 const themes = [
   {
     name: 'Light Mode',
+    id: 'light-mode',
     description: 'Dark text on colored backgrounds',
     textColor: '#1A1A1A',
     bgVar: 'var(--color-neutral-100)',
   },
   {
     name: 'Dark Mode',
+    id: 'dark-mode',
     description: 'Light text on colored backgrounds',
     textColor: '#FFFFFF',
     bgVar: 'var(--color-neutral-900)',
@@ -30,38 +35,91 @@ const themes = [
 ---
 
 <div class={`color-contrast ${className || ''}`}>
-  {
-    themes.map((theme) => (
-      <div class="theme-section">
-        <div class="theme-header">
-          <h2>{theme.name}</h2>
-          <p>{theme.description}</p>
-        </div>
-        <div class="color-groups">
-          {colorGroups.map((group) => (
-            <div class="color-group">
-              <h3>{group.name} Colors</h3>
-              <div class="colors">
-                {group.values.map((value) => (
-                  <div
-                    class="color-item"
-                    data-color-var={`--color-${group.prefix}-${value}`}
-                    data-theme-text-color={theme.textColor}
-                    style={`background-color: var(--color-${group.prefix}-${value})`}
-                  >
-                    <span class="color-name">
-                      {group.prefix} {value}
-                    </span>
-                    <span class="contrast-score" aria-live="polite" />
+  <div class="tabs-wrapper">
+    <Tabs>
+      <TabsList>
+        {
+          themes.map((theme, index) => (
+            <TabsTab id={theme.id} controls={`${theme.id}-panel`} selected={index === 0}>
+              {theme.name}
+            </TabsTab>
+          ))
+        }
+      </TabsList>
+
+      {
+        themes.map((theme, index) => (
+          <TabsPanel id={`${theme.id}-panel`} labelledby={theme.id} selected={index === 0}>
+            <div class="theme-section">
+              <div class="theme-header">
+                <h2>{theme.name}</h2>
+                <p>{theme.description}</p>
+              </div>
+              <div class="color-categories">
+                {/* Three column layout for color categories */}
+                <div class="color-category">
+                  <h3>Primary Colors</h3>
+                  <div class="colors">
+                    {colorGroups[0].values.map((value) => (
+                      <div
+                        class="color-item"
+                        data-color-var={`--color-${colorGroups[0].prefix}-${value}`}
+                        data-theme-text-color={theme.textColor}
+                        style={`background-color: var(--color-${colorGroups[0].prefix}-${value})`}
+                      >
+                        <span class="color-name">
+                          {colorGroups[0].prefix} {value}
+                        </span>
+                        <span class="contrast-score" aria-live="polite" />
+                      </div>
+                    ))}
                   </div>
-                ))}
+                </div>
+
+                <div class="color-category">
+                  <h3>Secondary Colors</h3>
+                  <div class="colors">
+                    {colorGroups[1].values.map((value) => (
+                      <div
+                        class="color-item"
+                        data-color-var={`--color-${colorGroups[1].prefix}-${value}`}
+                        data-theme-text-color={theme.textColor}
+                        style={`background-color: var(--color-${colorGroups[1].prefix}-${value})`}
+                      >
+                        <span class="color-name">
+                          {colorGroups[1].prefix} {value}
+                        </span>
+                        <span class="contrast-score" aria-live="polite" />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div class="color-category">
+                  <h3>Neutral Colors</h3>
+                  <div class="colors">
+                    {colorGroups[2].values.map((value) => (
+                      <div
+                        class="color-item"
+                        data-color-var={`--color-${colorGroups[2].prefix}-${value}`}
+                        data-theme-text-color={theme.textColor}
+                        style={`background-color: var(--color-${colorGroups[2].prefix}-${value})`}
+                      >
+                        <span class="color-name">
+                          {colorGroups[2].prefix} {value}
+                        </span>
+                        <span class="contrast-score" aria-live="polite" />
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
-          ))}
-        </div>
-      </div>
-    ))
-  }
+          </TabsPanel>
+        ))
+      }
+    </Tabs>
+  </div>
 </div>
 
 <script>
@@ -179,7 +237,9 @@ const themes = [
   initializeContrastChecker()
 </script>
 
-<style>
+<style lang="scss">
+  @use '../assets/scss/base/breakpoint' as *;
+
   .color-contrast {
     display: flex;
     flex-direction: column;
@@ -187,10 +247,7 @@ const themes = [
   }
 
   .theme-section {
-    margin-block: var(--space-m);
-    border: 1px solid var(--border-color-subtle);
-    border-radius: var(--radius-m);
-    padding: var(--space-m);
+    inline-size: 100%;
   }
 
   .theme-header {
@@ -205,13 +262,18 @@ const themes = [
     font-size: var(--font-size-2);
   }
 
-  .color-groups {
+  .color-categories {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
-    gap: var(--space-m);
+    grid-template-columns: 1fr;
+    gap: var(--space-l);
+
+    @include breakpoint(l) {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
 
-  .color-group h3 {
+  .color-category h3 {
+    margin-bottom: var(--space-xs);
     font-size: var(--font-size-1);
   }
 
