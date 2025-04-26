@@ -5,7 +5,7 @@ import Feature from '../components/Feature.astro'
 import Counter from '../components/Counter.astro'
 import ContentMedia from '../components/ContentMedia.astro'
 import ExternalLink from '../components/ExternalLink.astro'
-import { Accordion, AccordionItem } from 'accessible-astro-components'
+import { Accordion, AccordionItem, Avatar, AvatarGroup } from 'accessible-astro-components'
 ---
 
 <DefaultLayout title="Home">
@@ -121,15 +121,43 @@ import { Accordion, AccordionItem } from 'accessible-astro-components'
       </div>
     </div>
   </section>
+  <section class="my-64">
+    <div class="space-content container">
+      <h2 class="text-6xl">Our community</h2>
+      <p class="text-2xl">
+        We're a community of developers who are passionate about making the web more accessible. We're always looking
+        for new ways to improve the accessibility of the web.
+      </p>
+      <AvatarGroup display="grid" gridItemsSize="300px" gridGap="2rem">
+        <Avatar initials="RJ" title="Robert Johnson" subtitle="Manager" />
+        <Avatar initials="RJ" title="Robert Johnson" subtitle="Manager" />
+        <Avatar initials="RJ" title="Robert Johnson" subtitle="Manager" />
+        <Avatar initials="RJ" title="Robert Johnson" subtitle="Manager" />
+        <Avatar initials="RJ" title="Robert Johnson" subtitle="Manager" />
+        <Avatar initials="RJ" title="Robert Johnson" subtitle="Manager" />
+        <Avatar initials="RJ" title="Robert Johnson" subtitle="Manager" />
+        <Avatar initials="RJ" title="Robert Johnson" subtitle="Manager" />
+        <Avatar initials="RJ" title="Robert Johnson" subtitle="Manager" />
+      </AvatarGroup>
+    </div>
+  </section>
   <section class="mt-64 mb-32">
     <div class="container">
-      <h2 class="mb-16 text-6xl">Counters</h2>
+      <h2 class="mb-16 text-6xl">Impact in numbers</h2>
       <div class="grid grid-cols-1 gap-12 sm:grid-cols-2 md:grid-cols-4">
-        <Counter count="520" title="Stars" sub="On GitHub" />
-        <Counter count="17" title="Accessible" sub="Components" />
-        <Counter count="500" title="Commits" sub="Merged" />
-        <Counter count="18+" title="Months" sub="Since launch" />
+        <Counter count="900+" title="Stars" sub="On GitHub" />
+        <Counter count="25+" title="Accessible" sub="Components" />
+        <Counter count="400+" title="Commits" sub="Merged" />
+        <Counter count="48+" title="Months" sub="Since launch" />
       </div>
     </div>
   </section>
 </DefaultLayout>
+
+<style>
+  .avatar {
+    border: 1px solid var(--border-color-subtle);
+    border-radius: var(--radius-md);
+    padding: var(--space-s);
+  }
+</style>
