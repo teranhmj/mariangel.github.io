@@ -19,22 +19,18 @@
   }
 }
 
-.astro-text-center {
-  text-align: center;
-}
-
-.astro-center-content {
+.center-content {
   display: grid;
   place-items: center;
 }
 
-.astro-flex-center {
+.flex-center {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.astro-horizontal-center {
+.horizontal-center {
   margin: 0 auto;
 }
 

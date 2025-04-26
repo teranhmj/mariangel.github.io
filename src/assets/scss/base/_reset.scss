@@ -1,128 +1,130 @@
-html {
-  box-sizing: border-box;
-  scroll-behavior: smooth;
-}
+@layer base {
+  html {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+  }
 
-*,
-*::after,
-*::before {
-  box-sizing: inherit;
-}
+  *,
+  *::after,
+  *::before {
+    box-sizing: inherit;
+  }
 
-*:focus,
-*:focus-visible {
-  outline: 2px dashed black;
-  outline-color: black;
-  outline-offset: 0;
-  -webkit-box-shadow: 0 0 0 2px white;
-  box-shadow: 0 0 0 2px white;
-}
+  *:focus,
+  *:focus-visible {
+    outline: 2px dashed black;
+    outline-color: black;
+    outline-offset: 0;
+    -webkit-box-shadow: 0 0 0 2px white;
+    box-shadow: 0 0 0 2px white;
+  }
 
-*:focus:not(:focus-visible) {
-  outline: none;
-  box-shadow: none;
-}
+  *:focus:not(:focus-visible) {
+    outline: none;
+    box-shadow: none;
+  }
 
-blockquote,
-body,
-figure,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-hr,
-li,
-ol,
-p,
-pre,
-ul {
-  margin: 0;
-  padding: 0;
-}
+  blockquote,
+  body,
+  figure,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  hr,
+  li,
+  ol,
+  p,
+  pre,
+  ul {
+    margin: 0;
+    padding: 0;
+  }
 
-ul:where([class]) {
-  list-style: none;
-}
+  ul:where([class]) {
+    list-style: none;
+  }
 
-button,
-input,
-select,
-textarea {
-  color: inherit;
-  font: inherit;
-  letter-spacing: inherit;
-}
+  button,
+  input,
+  select,
+  textarea {
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+  }
 
-input[type='text'],
-textarea {
-  width: 100%;
-}
+  input[type='text'],
+  textarea {
+    width: 100%;
+  }
 
-fieldset {
-  border: none;
-  padding: 0;
-}
+  fieldset {
+    border: none;
+    padding: 0;
+  }
 
-legend {
-  margin-bottom: 0.5rem;
-  max-width: 100%;
-}
+  legend {
+    margin-bottom: 0.5rem;
+    max-width: 100%;
+  }
 
-input,
-textarea {
-  border: 1px solid gray;
-}
+  input,
+  textarea {
+    border: 1px solid gray;
+  }
 
-button {
-  border: none;
-  border-radius: 0;
-  background-color: transparent;
-  padding: 0;
-}
+  button {
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
+    padding: 0;
+  }
 
-button * {
-  pointer-events: none;
-}
+  button * {
+    pointer-events: none;
+  }
 
-button:hover {
-  cursor: pointer;
-}
+  button:hover {
+    cursor: pointer;
+  }
 
-embed,
-iframe,
-img,
-object,
-svg,
-video {
-  display: block;
-  max-width: 100%;
-}
+  embed,
+  iframe,
+  img,
+  object,
+  svg,
+  video {
+    display: block;
+    max-width: 100%;
+  }
 
-table {
-  width: 100%;
-  table-layout: fixed;
-}
+  table {
+    width: 100%;
+    table-layout: fixed;
+  }
 
-[hidden] {
-  display: none !important;
-}
+  [hidden] {
+    display: none !important;
+  }
 
-noscript {
-  display: block;
-  margin-top: 1em;
-  margin-bottom: 1em;
-}
+  noscript {
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
 
-[tabindex='-1'] {
-  outline: none !important;
-  box-shadow: none !important;
-}
+  [tabindex='-1'] {
+    outline: none !important;
+    box-shadow: none !important;
+  }
 
-[popover] {
-  position: absolute;
-  inset: auto;
-  border: none;
-  padding: 0;
+  [popover] {
+    position: absolute;
+    inset: auto;
+    border: none;
+    padding: 0;
+  }
 }
