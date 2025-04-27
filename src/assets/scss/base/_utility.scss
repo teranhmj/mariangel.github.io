@@ -17,6 +17,10 @@
   &.stretch {
     max-width: 100%;
   }
+
+  &.narrow {
+    max-width: 800px;
+  }
 }
 
 .center-content {
@@ -187,44 +191,44 @@ $font-map: (
 .space-content {
   > * + *,
   > dl > * + * {
-    margin-top: 1.5rem;
-    margin-bottom: 0;
+    margin-block-start: var(--space-s);
+    margin-block-end: 0;
   }
 
   > h2 {
-    margin-top: 3rem;
+    margin-block-start: var(--space-l);
 
     @include breakpoint(xl) {
-      margin-top: 4rem;
+      margin-block-start: var(--space-xl);
     }
   }
 
   > h3 {
-    margin-top: 2rem;
+    margin-block-start: var(--space-m);
 
     @include breakpoint(xl) {
-      margin-top: 3rem;
+      margin-block-start: var(--space-l);
     }
   }
 
   > h4 {
-    margin-top: 1.5rem;
+    margin-block-start: var(--space-s);
 
     @include breakpoint(xl) {
-      margin-top: 2rem;
+      margin-block-start: var(--space-m);
     }
   }
 
   > h5,
   > h6 {
-    margin-top: 1rem;
+    margin-block-start: var(--space-xs);
 
     @include breakpoint(xl) {
-      margin-top: 1.5rem;
+      margin-block-start: var(--space-s);
     }
   }
 
   > *:first-child {
-    margin-top: 0;
+    margin-block-start: 0;
   }
 }

@@ -15,10 +15,7 @@ ol:not([class]) {
 }
 
 ul:not([class]) {
-  > li::marker {
-    display: block;
-    color: var(--color-primary-500);
-  }
+  list-style-type: disc;
 }
 
 ol.incremented {

@@ -1,6 +1,7 @@
 ---
 import DefaultLayout from '../layouts/DefaultLayout.astro'
 import { Icon } from 'astro-icon/components'
+import PageHeader from '../components/PageHeader.astro'
 import {
   Accordion,
   AccordionItem,
@@ -23,19 +24,15 @@ import {
 } from 'accessible-astro-components'
 ---
 
-<DefaultLayout title="Accessible Components">
+<DefaultLayout title="Accessible components">
   <section class="my-12">
-    <div class="space-content container">
-      <h1>Accessible Components</h1>
-      <p class="text-2xl">
-        This theme has a lot of extra a11y components provided by the <a
-          href="https://github.com/markteekman/accessible-astro-components">Accessible Astro Components</a
-        > NPM package to help you build accessible pages faster. To learn more about the components and how to use them,
-        checkout our <a href="https://accessible-astro.incluud.dev/">documentation website</a>.
-      </p>
-    </div>
+    <PageHeader
+      title="Accessible components"
+      subtitle="This theme has a lot of extra A11Y components provided by the <a href='https://github.com/incluud/accessible-astro-components'>Accessible Astro Components</a> NPM package to help you build accessible pages faster. To learn more about the components and how to use them, checkout our <a href='https://accessible-astro.incluud.dev/'>documentation website</a>. The theme itself ships with many other components you can find in the components folder."
+      bgType="bordered"
+    />
   </section>
-  <section class="mb-12 mt-32">
+  <section class="mt-32 mb-12">
     <div class="container">
       <div class="grid grid-cols-1 gap-32 md:grid-cols-2">
         <div class="space-content">
@@ -208,7 +205,7 @@ import {
           </Card>
         </div>
         <div class="space-content">
-          <h2>DarkMode Toggle</h2>
+          <h2>Dark mode toggle</h2>
           <div class="flex gap-2">
             <DarkMode />
             <DarkMode>
@@ -271,7 +268,7 @@ import {
           <Pagination totalPages="200" />
         </div>
         <div class="space-content">
-          <h2>SkipLink</h2>
+          <h2>Skip link</h2>
           <p>
             The SkipLink component becomes visible when you shift+tab to navigate backward through the page, it's the
             first focusable element on the page.
@@ -336,7 +333,7 @@ import {
       </div>
     </div>
   </section>
-  <section class="mb-12 mt-32">
+  <section class="mt-32 mb-12">
     <div class="container">
       <div class="grid grid-cols-1 gap-32 md:grid-cols-2">
         <div class="space-content">

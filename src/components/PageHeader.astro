@@ -17,25 +17,22 @@ interface Props {
   title: string
   /**
    * The subtitle of the page
+   * @description Can contain HTML content
    */
   subtitle?: string
   /**
    * The background color of the page header
-   * @type {'primary' | 'secondary' | 'neutral' | 'gradient' | undefined}
+   * @type {'primary' | 'secondary' | 'neutral' | 'gradient' | 'bordered' | undefined}
    * @default undefined - Uses the default background color
    */
-  bgColor?: 'primary' | 'secondary' | 'neutral' | 'gradient'
+  bgType?: 'primary' | 'secondary' | 'neutral' | 'gradient' | 'bordered'
   /**
    * Whether to show the breadcrumbs
    */
   showBreadcrumbs?: boolean
-  /**
-   * Whether to show the border
-   */
-  showBorder?: boolean
 }
 
-const { class: className, title, subtitle, bgColor, showBreadcrumbs = true, showBorder = false } = Astro.props
+const { class: className, title, subtitle, bgType, showBreadcrumbs = true } = Astro.props
 ---
 
 <section class:list={[className, 'page-header']}>
@@ -68,10 +65,10 @@ const { class: className, title, subtitle, bgColor, showBreadcrumbs = true, show
         })()
     }
   </div>
-  <div class:list={['py-16', bgColor && `bg-${bgColor}`, showBorder && 'border']}>
+  <div class:list={['py-16', bgType && `bg-${bgType}`]}>
     <div class="space-content container">
       <h1>{title}</h1>
-      {subtitle && <p class="text-2xl">{subtitle}</p>}
+      {subtitle && <p class="text-2xl" set:html={subtitle} />}
     </div>
   </div>
 </section>
@@ -99,7 +96,7 @@ const { class: className, title, subtitle, bgColor, showBreadcrumbs = true, show
       color: var(--color-neutral-900);
     }
 
-    .border {
+    .bg-bordered {
       border: 1px solid var(--border-color-subtle);
       border-inline: 0;
     }
