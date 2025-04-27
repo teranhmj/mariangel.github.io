@@ -82,7 +82,7 @@
 }
 
 .truncate {
-  overflow: hidden;
+  overflow: clip;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -91,7 +91,7 @@
   display: -webkit-box;
   -webkit-line-clamp: var(--line-clamp);
   -webkit-box-orient: vertical;
-  overflow: hidden;
+  overflow: clip;
 }
 
 .uppercase {
@@ -100,13 +100,13 @@
 
 .sr-only {
   position: absolute;
-  overflow: hidden;
+  overflow: clip;
   clip: rect(0 0 0 0);
   margin: 0;
   border: 0;
   padding: 0;
-  width: 1px;
-  height: auto;
+  inline-size: 1px;
+  block-size: auto;
   white-space: nowrap;
 }
 
