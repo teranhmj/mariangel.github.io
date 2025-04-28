@@ -1,0 +1,28 @@
+---
+import { Image } from 'astro:assets'
+
+/**
+ * BreakoutImage Component
+ *
+ * @description A component for displaying a landscape image that breaks out of the container
+ */
+interface Props {
+  /**
+   * The image source
+   */
+  src: string
+}
+
+const { src } = Astro.props
+---
+
+<div class="relative -mx-4 my-8 md:-mx-8 lg:-mx-[120px]">
+  <Image
+    src={src}
+    alt="Landscape image that breaks out of the container"
+    width={1400}
+    height={700}
+    class="h-auto w-full rounded-lg object-cover"
+  />
+  <div class="absolute inset-0 rounded-lg shadow-inner"></div>
+</div>

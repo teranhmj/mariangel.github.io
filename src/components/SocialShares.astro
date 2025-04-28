@@ -1,0 +1,30 @@
+---
+import { Icon } from 'astro-icon/components'
+
+/**
+ * SocialShares Component
+ *
+ * @description A component for sharing content on social media platforms
+ */
+---
+
+<ul class="mt-2 ml-[-10px] flex flex-wrap gap-3">
+  <li class="animate-bouncing">
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://accessible-astro.com/blog/post-1">
+      <span class="sr-only">Share on Facebook</span>
+      <Icon name="lucide:facebook" size={40} />
+    </a>
+  </li>
+  <li class="animate-bouncing">
+    <a href="https://x.com/share?url=https://accessible-astro.com/blog/post-1">
+      <span class="sr-only">Share on Twitter</span>
+      <Icon name="lucide:twitter" size={40} />
+    </a>
+  </li>
+  <li class="animate-bouncing">
+    <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://accessible-astro.com/blog/post-1">
+      <span class="sr-only">Share on LinkedIn</span>
+      <Icon name="lucide:linkedin" size={40} />
+    </a>
+  </li>
+</ul>

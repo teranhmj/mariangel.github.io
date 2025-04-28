@@ -1,7 +1,8 @@
 ---
 import DefaultLayout from '../../layouts/DefaultLayout.astro'
 import PageHeader from '../../components/PageHeader.astro'
-import { Icon } from 'astro-icon/components'
+import SocialShares from '../../components/SocialShares.astro'
+import BreakoutImage from '../../components/BreakoutImage.astro'
 import { Image } from 'astro:assets'
 
 export async function getStaticPaths() {
@@ -122,16 +123,7 @@ const author = {
       <p>
         This image breaks out of the narrow container on larger screens, creating a more immersive visual experience.
       </p>
-      <div class="relative -mx-4 my-8 md:-mx-8 lg:-mx-[120px]">
-        <Image
-          src="/posts/post-image-2.png"
-          alt="Landscape image that breaks out of the container"
-          width={1400}
-          height={700}
-          class="h-auto w-full rounded-lg object-cover"
-        />
-        <div class="absolute inset-0 rounded-lg shadow-inner"></div>
-      </div>
+      <BreakoutImage src="/posts/post-image-2.png" />
       <p>
         Notice how the image above extends beyond the boundaries of the text content, creating visual interest and
         drawing attention to important visual elements.
@@ -149,26 +141,7 @@ const author = {
     <div class="narrow space-content container">
       <h2>Share this post</h2>
       <p>Like this post? Share it with your friends!</p>
-      <ul class="mt-2 ml-[-10px] flex flex-wrap gap-3">
-        <li class="animate-bouncing">
-          <a href="https://www.facebook.com/sharer/sharer.php?u=https://accessible-astro.com/blog/post-1">
-            <span class="sr-only">Share on Facebook</span>
-            <Icon name="lucide:facebook" size={40} />
-          </a>
-        </li>
-        <li class="animate-bouncing">
-          <a href="https://x.com/share?url=https://accessible-astro.com/blog/post-1">
-            <span class="sr-only">Share on Twitter</span>
-            <Icon name="lucide:twitter" size={40} />
-          </a>
-        </li>
-        <li class="animate-bouncing">
-          <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://accessible-astro.com/blog/post-1">
-            <span class="sr-only">Share on LinkedIn</span>
-            <Icon name="lucide:linkedin" size={40} />
-          </a>
-        </li>
-      </ul>
+      <SocialShares />
     </div>
   </section>
 </DefaultLayout>
