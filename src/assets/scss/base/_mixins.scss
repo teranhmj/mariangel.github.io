@@ -1,18 +1,25 @@
-@mixin text-decoration($color: var(--text-decoration-color), $hoverColor: var(--text-decoration-hover-color)) {
+@mixin text-decoration(
+  $color: var(--text-decoration-color),
+  $hoverColor: var(--text-decoration-hover-color),
+  $thickness: 2px,
+  $hoverThickness: 1px,
+  $underlineOffset: 4px,
+  $hoverUnderlineOffset: 2px
+) {
   transition: text-decoration, text-underline-offset, text-decoration-color, text-decoration-thickness;
   transition-duration: var(--animation-speed-fast);
   transition-timing-function: var(--cubic-bezier);
   text-decoration: underline;
   text-decoration-style: solid;
   text-decoration-color: $color;
-  text-decoration-thickness: 2px;
+  text-decoration-thickness: $thickness;
   text-decoration-skip-ink: none;
-  text-underline-offset: 4px;
+  text-underline-offset: $underlineOffset;
 
   &:where(:hover, :focus-visible) {
     text-decoration-color: $hoverColor;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 2px;
+    text-decoration-thickness: $hoverThickness;
+    text-underline-offset: $hoverUnderlineOffset;
   }
 }
 
