@@ -5,18 +5,31 @@ interface Props {
 
 const { class: className } = Astro.props
 
-// Import Tabs components
 import { Tabs, TabsList, TabsTab, TabsPanel } from 'accessible-astro-components'
 
+interface ColorGroup {
+  name: string
+  prefix: string
+  values: number[]
+}
+
+interface Theme {
+  name: string
+  id: string
+  description: string
+  textColor: string
+  bgVar: string
+}
+
 // Define color variants to test
-const colorGroups = [
+const colorGroups: ColorGroup[] = [
   { name: 'Primary', prefix: 'primary', values: [100, 200, 300, 400, 500] },
   { name: 'Secondary', prefix: 'secondary', values: [100, 200, 300, 400, 500] },
   { name: 'Neutral', prefix: 'neutral', values: [100, 200, 300, 400, 500, 600, 700, 800, 900] },
 ]
 
 // Define themes to test
-const themes = [
+const themes: Theme[] = [
   {
     name: 'Light Mode',
     id: 'light-mode',
@@ -124,9 +137,9 @@ const themes = [
 
 <script>
   // Initialize accessibility testing
-  function initializeContrastChecker() {
+  function initializeContrastChecker(): void {
     // Set up WCAG levels for testing
-    const wcagLevels = [
+    const wcagLevels: Array<{ name: string; ratio: number; className: string }> = [
       { name: 'AAA', ratio: 7.0, className: 'excellent' },
       { name: 'AA', ratio: 4.5, className: 'good' },
       { name: 'AA Large', ratio: 3.0, className: 'fair' },
@@ -134,8 +147,8 @@ const themes = [
     ]
 
     // Calculate relative luminance for RGB color
-    function getLuminance(r, g, b) {
-      const sRGB = [r, g, b].map((val) => {
+    function getLuminance(r: number, g: number, b: number): number {
+      const sRGB: number[] = [r, g, b].map((val) => {
         val = val / 255
         return val <= 0.03928 ? val / 12.92 : Math.pow((val + 0.055) / 1.055, 2.4)
       })
@@ -143,18 +156,18 @@ const themes = [
     }
 
     // Calculate contrast ratio between two colors
-    function getContrastRatio(rgb1, rgb2) {
-      const lum1 = getLuminance(rgb1[0], rgb1[1], rgb1[2])
-      const lum2 = getLuminance(rgb2[0], rgb2[1], rgb2[2])
-      const lighter = Math.max(lum1, lum2)
-      const darker = Math.min(lum1, lum2)
+    function getContrastRatio(rgb1: number[], rgb2: number[]): number {
+      const lum1: number = getLuminance(rgb1[0], rgb1[1], rgb1[2])
+      const lum2: number = getLuminance(rgb2[0], rgb2[1], rgb2[2])
+      const lighter: number = Math.max(lum1, lum2)
+      const darker: number = Math.min(lum1, lum2)
       return (lighter + 0.05) / (darker + 0.05)
     }
 
     // Extract RGB values from a color string
-    function extractRGB(colorStr) {
-      const canvas = document.createElement('canvas')
-      const ctx = canvas.getContext('2d')
+    function extractRGB(colorStr: string): number[] {
+      const canvas: HTMLCanvasElement = document.createElement('canvas')
+      const ctx: CanvasRenderingContext2D | null = canvas.getContext('2d')
       if (!ctx) return [0, 0, 0] // Handle null context
 
       ctx.fillStyle = colorStr
@@ -163,12 +176,17 @@ const themes = [
       ctx.fillRect(0, 0, 1, 1)
 
       // Get the pixel data
-      const data = ctx.getImageData(0, 0, 1, 1).data
+      const data: Uint8ClampedArray = ctx.getImageData(0, 0, 1, 1).data
       return [data[0], data[1], data[2]]
     }
 
     // Find which WCAG level a contrast ratio meets
-    function getWCAGLevel(ratio) {
+    function getWCAGLevel(ratio: number): {
+      name: string
+      className: string
+      passes: boolean
+      ratio: string
+    } {
       for (const level of wcagLevels) {
         if (ratio >= level.ratio) {
           return {
@@ -188,38 +206,38 @@ const themes = [
     }
 
     // Get accurate computed color by rendering it
-    function getComputedColorValue(element, property) {
+    function getComputedColorValue(element: Element, property: string): string {
       // Get the computed style
-      const style = window.getComputedStyle(element)
+      const style: CSSStyleDeclaration = window.getComputedStyle(element)
       return style.getPropertyValue(property)
     }
 
     // Process all color items
-    function processColorItems() {
-      const colorItems = document.querySelectorAll('.color-item')
+    function processColorItems(): void {
+      const colorItems: NodeListOf<Element> = document.querySelectorAll('.color-item')
 
       colorItems.forEach((item) => {
         // Get the background color
-        const bgColor = getComputedColorValue(item, 'background-color')
-        const bgRGB = extractRGB(bgColor)
+        const bgColor: string = getComputedColorValue(item, 'background-color')
+        const bgRGB: number[] = extractRGB(bgColor)
 
         // Get the text color for this theme section
-        const themeTextColor = item.getAttribute('data-theme-text-color') || '#1A1A1A'
-        const textRGB = extractRGB(themeTextColor)
+        const themeTextColor: string = item.getAttribute('data-theme-text-color') || '#1A1A1A'
+        const textRGB: number[] = extractRGB(themeTextColor)
 
         // Calculate contrast ratio
-        const contrastRatio = getContrastRatio(bgRGB, textRGB)
+        const contrastRatio: number = getContrastRatio(bgRGB, textRGB)
         const result = getWCAGLevel(contrastRatio)
 
         // Update the contrast score
-        const scoreElement = item.querySelector('.contrast-score')
+        const scoreElement: Element | null = item.querySelector('.contrast-score')
         if (scoreElement) {
           scoreElement.textContent = `${result.ratio} ${result.name}`
           scoreElement.className = `contrast-score ${result.className}`
         }
 
         // Set the text color for the color name
-        const nameElement = item.querySelector('.color-name')
+        const nameElement: Element | null = item.querySelector('.color-name')
         if (nameElement && nameElement instanceof HTMLElement) {
           nameElement.style.color = themeTextColor
         }
@@ -290,7 +308,7 @@ const themes = [
     align-items: center;
     border-radius: var(--radius-s);
     padding: var(--space-m);
-    height: 3rem;
+    block-size: 3rem;
     font-weight: 500;
   }
 
@@ -298,7 +316,7 @@ const themes = [
     backdrop-filter: blur(4px);
     border-radius: var(--radius-xs);
     background-color: rgba(255, 255, 255, 0.25);
-    padding: 0.2rem 0.5rem;
+    padding: var(--space-2xs) var(--space-3xs);
     font-weight: 700;
     font-size: var(--font-size--1);
   }
