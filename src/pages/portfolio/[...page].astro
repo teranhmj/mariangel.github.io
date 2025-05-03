@@ -10,12 +10,12 @@ export const getStaticPaths = (async ({ paginate }) => {
   const projects = await getCollection('projects')
 
   const projectImages = [
-    { src: '/projects/project-image-1.png' },
-    { src: '/projects/project-image-2.png' },
-    { src: '/projects/project-image-3.png' },
-    { src: '/projects/project-image-4.png' },
-    { src: '/projects/project-image-5.png' },
-    { src: '/projects/project-image-6.png' },
+    { src: '../../../public/projects/project-image-1.png' },
+    { src: '../../../public/projects/project-image-2.png' },
+    { src: '../../../public/projects/project-image-3.png' },
+    { src: '../../../public/projects/project-image-4.png' },
+    { src: '../../../public/projects/project-image-5.png' },
+    { src: '../../../public/projects/project-image-6.png' },
   ]
 
   const projectsWithImages = projects.map((project, index) => {
@@ -56,7 +56,7 @@ const totalPages = Math.ceil(page.total / page.size)
           page.data.map((project) => (
             <li>
               <Card
-                img={project.featuredImage}
+                imageComponent={import(project.featuredImage)}
                 url={'/portfolio/' + project.id}
                 title={project.data.title}
                 footer={'Author: ' + project.data.author}
