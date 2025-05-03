@@ -1,27 +1,28 @@
 ---
-import DefaultLayout from '../../layouts/DefaultLayout.astro'
-import PageHeader from '../../components/PageHeader.astro'
+import DefaultLayout from '@layouts/DefaultLayout.astro'
+import PageHeader from '@components/PageHeader.astro'
 import { Card, Pagination } from 'accessible-astro-components'
 import { getCollection } from 'astro:content'
 import type { GetStaticPaths, Page } from 'astro'
 import type { CollectionEntry } from 'astro:content'
 
+// Import images directly for optimization
+import projectImage1 from '@assets/images/projects/project-image-1.png'
+import projectImage2 from '@assets/images/projects/project-image-2.png'
+import projectImage3 from '@assets/images/projects/project-image-3.png'
+import projectImage4 from '@assets/images/projects/project-image-4.png'
+import projectImage5 from '@assets/images/projects/project-image-5.png'
+import projectImage6 from '@assets/images/projects/project-image-6.png'
+
 export const getStaticPaths = (async ({ paginate }) => {
   const projects = await getCollection('projects')
 
-  const projectImages = [
-    { src: '../../../public/projects/project-image-1.png' },
-    { src: '../../../public/projects/project-image-2.png' },
-    { src: '../../../public/projects/project-image-3.png' },
-    { src: '../../../public/projects/project-image-4.png' },
-    { src: '../../../public/projects/project-image-5.png' },
-    { src: '../../../public/projects/project-image-6.png' },
-  ]
+  const projectImages = [projectImage1, projectImage2, projectImage3, projectImage4, projectImage5, projectImage6]
 
   const projectsWithImages = projects.map((project, index) => {
     return {
       ...project,
-      featuredImage: projectImages[index % projectImages.length].src,
+      featuredImage: projectImages[index % projectImages.length],
     }
   })
 
@@ -29,7 +30,7 @@ export const getStaticPaths = (async ({ paginate }) => {
 }) satisfies GetStaticPaths
 
 interface Props {
-  page: Page<CollectionEntry<'projects'> & { featuredImage: string }>
+  page: Page<CollectionEntry<'projects'> & { featuredImage: any }>
 }
 
 const { page } = Astro.props
@@ -56,7 +57,7 @@ const totalPages = Math.ceil(page.total / page.size)
           page.data.map((project) => (
             <li>
               <Card
-                imageComponent={import(project.featuredImage)}
+                imageComponent={project.featuredImage}
                 url={'/portfolio/' + project.id}
                 title={project.data.title}
                 footer={'Author: ' + project.data.author}
@@ -73,8 +74,8 @@ const totalPages = Math.ceil(page.total / page.size)
           previousPage={page.url.prev ? page.url.prev : null}
           nextPage={page.url.next ? page.url.next : null}
           lastPage={page.url.next ? `/portfolio/${Math.ceil(page.total / page.size)}` : null}
-          currentPage={String(page.currentPage)}
-          totalPages={String(Math.ceil(page.total / page.size))}
+          currentPage={`${page.currentPage}`}
+          totalPages={`${Math.ceil(page.total / page.size)}`}
           ariaLabel="Portfolio pagination"
         />
       </div>
