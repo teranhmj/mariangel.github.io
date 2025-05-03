@@ -380,7 +380,10 @@ import Logo from './Logo.astro'
       ul {
         display: none;
         position: absolute;
+        flex-direction: column;
+        gap: var(--space-2xs);
         translate: 0 1rem;
+        opacity: 0;
         z-index: 100;
         inset-block-start: 125%;
         inset-inline-end: 0;
@@ -402,16 +405,12 @@ import Logo from './Logo.astro'
 
       > button.show ~ ul {
         display: flex;
-        flex-direction: column;
-        gap: var(--space-2xs);
         translate: 0;
         opacity: 1;
 
-        @media (prefers-reduced-motion: no-preference) {
-          @starting-style {
-            translate: 0 1rem;
-            opacity: 0;
-          }
+        @starting-style {
+          translate: 0 1rem;
+          opacity: 0;
         }
       }
     }
@@ -425,17 +424,8 @@ import Logo from './Logo.astro'
         block-size: 30px;
       }
 
-      svg path {
-        fill: var(--foreground-color);
-        transition: fill var(--animation-speed-fast) var(--cubic-bezier);
-      }
-
       &:where(:hover, :focus-visible) {
         box-shadow: none;
-
-        svg path {
-          fill: var(--foreground-color);
-        }
       }
 
       &:focus {
