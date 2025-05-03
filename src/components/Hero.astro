@@ -35,7 +35,7 @@ const { src = '/astronaut-hero-img.webp' }: Props = Astro.props
           </a>
         </div>
       </div>
-      <Image class="hidden lg:block" src={src} alt="" decoding="async" width={800} height={600} />
+      <Image class="hidden lg:block" src={src} alt="" decoding="async" width={800} height={600} loading="eager" />
     </div>
   </div>
 </section>
