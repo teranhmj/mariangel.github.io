@@ -23,12 +23,12 @@ export async function getStaticPaths({ paginate }) {
   }
 
   const postsWithImages = data.slice(0, 30).map((post) => {
-    const titleObj = truncateTitle(post.title)
+    const truncatedTitle = truncateTitle(post.title)
     return {
       ...post,
       featuredImage: postImages[post.id % postImages.length].src,
-      title: titleObj.truncated,
-      shortUrl: titleObj.truncated.replaceAll(' ', '-').toLowerCase(),
+      title: truncatedTitle,
+      shortUrl: truncatedTitle.replaceAll(' ', '-').toLowerCase(),
     }
   })
 
@@ -72,9 +72,10 @@ const { page } = Astro.props
           firstPage={page.url.prev ? '/blog' : null}
           previousPage={page.url.prev ? page.url.prev : null}
           nextPage={page.url.next ? page.url.next : null}
-          lastPage={page.url.next ? `/blog/${Math.round(page.total / page.size)}` : null}
-          currentPage={page.currentPage}
-          totalPages={Math.round(page.total / page.size)}
+          lastPage={page.url.next ? `/blog/${Math.ceil(page.total / page.size)}` : null}
+          currentPage={String(page.currentPage)}
+          totalPages={String(Math.ceil(page.total / page.size))}
+          ariaLabel="Blog pagination"
         />
       </div>
     </div>
