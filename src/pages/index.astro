@@ -1,10 +1,11 @@
 ---
-import DefaultLayout from '../layouts/DefaultLayout.astro'
-import Hero from '../components/Hero.astro'
-import Feature from '../components/Feature.astro'
-import Counter from '../components/Counter.astro'
-import ContentMedia from '../components/ContentMedia.astro'
-import { Accordion, AccordionItem } from 'accessible-astro-components'
+import DefaultLayout from '@layouts/DefaultLayout.astro'
+import Hero from '@components/Hero.astro'
+import Feature from '@components/Feature.astro'
+import Counter from '@components/Counter.astro'
+import ContentMedia from '@components/ContentMedia.astro'
+import ExternalLink from '@components/ExternalLink.astro'
+import { Accordion, AccordionItem, Avatar, AvatarGroup } from 'accessible-astro-components'
 ---
 
 <DefaultLayout title="Home">
@@ -13,47 +14,49 @@ import { Accordion, AccordionItem } from 'accessible-astro-components'
     <div class="container">
       <h2 class="mb-16 text-6xl">Features</h2>
       <div class="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3">
-        <Feature icon="mdi:tailwind" title="Tailwind CSS">
-          Use the power of Tailwind to greatly improve your productivity and enhance your developer workflow.
+        <Feature icon="lucide:accessibility" title="Accessible by default">
+          Keyboard navigation, focus indicators, ARIA labels, semantic HTML, and more. This theme is designed to be
+          inclusive.
         </Feature>
-        <Feature icon="mdi:wheelchair-accessibility" title="a11y Components">
-          17 components and counting, all tried and tested for the most optimal accessible experience for your visitors.
+        <Feature icon="lucide:puzzle" title="A11Y components">
+          25+ components and counting, all tried and tested for the most optimal accessible experience for your
+          visitors.
         </Feature>
-        <Feature icon="mdi:looks" title="Prettier">
-          Less worry about formatting your code, let the Astro Prettier integration do the heavy lifting.
-        </Feature>
-        <Feature icon="mdi:eslint" title="ESLint">
-          Lint your code with strict a11y settings to ensure you stay on track with the WCAG standards.
-        </Feature>
-        <Feature icon="mdi:book-open-page-variant" title="Blog">
-          This theme comes with a fully integrated blog, dynamic pages and SEO optimization.
-        </Feature>
-        <Feature icon="mdi:language-markdown" title="Markdown & MDX">
-          Easily use .md and .mdx pages to build your websites or use it with Netlify CMS.
-        </Feature>
-        <Feature icon="mdi:theme-light-dark" title="Dark mode">
+        <Feature icon="lucide:moon" title="Dark mode">
           Fully integrated Dark mode gives your users the choice for their favorite viewing mode.
         </Feature>
-        <Feature icon="mdi:cog" title="Design System">
-          The theme offers some very handy utilities to help you build your website faster.
+        <Feature icon="lucide:paintbrush" title="Tailwind 4.0">
+          Use the power of Tailwind to greatly improve your productivity and enhance your developer workflow.
         </Feature>
-        <Feature icon="mdi:lighthouse" title="Lighthouse Scores">
-          Excellent lighthouse scores means your website will load faster and get better SEO rankings.
+        <Feature icon="lucide:sparkles" title="Prettier">
+          Less worry about formatting your code, let the Astro Prettier integration do the heavy lifting.
+        </Feature>
+        <Feature icon="lucide:code" title="ESLint">
+          Lint your code with strict a11y settings to ensure you stay on track with the WCAG standards.
+        </Feature>
+        <Feature icon="lucide:bookmark" title="Blog & portfolio">
+          This theme comes with a fully integrated blog and portfolio, dynamic pages and SEO optimization.
+        </Feature>
+        <Feature icon="lucide:file-text" title="Markdown & MDX">
+          Easily use .md and .mdx pages to build your websites or use it with Netlify CMS.
+        </Feature>
+        <Feature icon="lucide:blocks" title="Design system">
+          The theme offers some very handy utilities to help you build your website faster.
         </Feature>
       </div>
     </div>
   </section>
   <ContentMedia imgSrc="/accessible-components.webp">
-    <h2>Accessible Components</h2>
+    <h2>Accessible components</h2>
     <p class="text-2xl">
       This theme provides plenty of tried and tested Accessible Astro Components. Some are native to this theme and a
-      lot of others are integrated using a <a href="https://github.com/markteekman/accessible-astro-components"
-        >separate package</a
+      lot of others are integrated using a <ExternalLink href="https://github.com/incluud/accessible-astro-components"
+        >separate package</ExternalLink
       >. They'll get you up and running in building an accessible solution for your visitors.
     </p>
   </ContentMedia>
   <ContentMedia imgSrc="/wcag-compliant.webp" reverseImg={true}>
-    <h2>WCAG 2.2 AA Compliant</h2>
+    <h2>WCAG 2.2 AA compliant</h2>
     <p class="text-2xl">
       Using semantic HTML, landmarks, skip links, screen reader friendly content, aria-labels, keyboard accessible
       navigation and components, clear outlines and tab indicators and the right color contrast, you're more certain of
@@ -118,15 +121,43 @@ import { Accordion, AccordionItem } from 'accessible-astro-components'
       </div>
     </div>
   </section>
-  <section class="mb-32 mt-64">
+  <section class="my-64">
+    <div class="space-content container">
+      <h2 class="text-6xl">Our community</h2>
+      <p class="text-2xl">
+        We're a community of developers who are passionate about making the web more accessible. We're always looking
+        for new ways to improve the accessibility of the web.
+      </p>
+      <AvatarGroup display="grid" gridItemsSize="300px" gridGap="2rem">
+        <Avatar initials="RJ" title="Robert Johnson" subtitle="Manager" />
+        <Avatar initials="MT" title="Maria Torres" subtitle="Developer" />
+        <Avatar initials="AK" title="Alex Kim" subtitle="Designer" />
+        <Avatar initials="SL" title="Sarah Lee" subtitle="Content Strategist" />
+        <Avatar initials="JP" title="James Peterson" subtitle="QA Engineer" />
+        <Avatar initials="LW" title="Lisa Wong" subtitle="Product Owner" />
+        <Avatar initials="DM" title="David Martinez" subtitle="UX Researcher" />
+        <Avatar initials="EB" title="Emma Brown" subtitle="Accessibility Specialist" />
+        <Avatar initials="TC" title="Thomas Chen" subtitle="Frontend Developer" />
+      </AvatarGroup>
+    </div>
+  </section>
+  <section class="mt-64 mb-32">
     <div class="container">
-      <h2 class="mb-16 text-6xl">Counters</h2>
+      <h2 class="mb-16 text-6xl">Impact in numbers</h2>
       <div class="grid grid-cols-1 gap-12 sm:grid-cols-2 md:grid-cols-4">
-        <Counter count="520" title="Stars" sub="On GitHub" />
-        <Counter count="17" title="Accessible" sub="Components" />
-        <Counter count="500" title="Commits" sub="Merged" />
-        <Counter count="18+" title="Months" sub="Since launch" />
+        <Counter count="900+" title="Stars" sub="On GitHub" />
+        <Counter count="25+" title="Accessible" sub="Components" />
+        <Counter count="400+" title="Commits" sub="Merged" />
+        <Counter count="48+" title="Months" sub="Since launch" />
       </div>
     </div>
   </section>
 </DefaultLayout>
+
+<style>
+  .avatar {
+    border: 1px solid var(--border-color-subtle);
+    border-radius: var(--radius-md);
+    padding: var(--space-s);
+  }
+</style>

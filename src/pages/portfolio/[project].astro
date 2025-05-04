@@ -1,63 +1,74 @@
 ---
-import DefaultLayout from '../../layouts/DefaultLayout.astro'
-import { Breadcrumbs, BreadcrumbsItem } from 'accessible-astro-components'
+import DefaultLayout from '@layouts/DefaultLayout.astro'
+import PageHeader from '@components/PageHeader.astro'
+import SocialShares from '@components/SocialShares.astro'
 import { getCollection, render } from 'astro:content'
 import type { CollectionEntry } from 'astro:content'
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects')
-  return projects.map((project) => {
+
+  const projectImages = [
+    { src: '/projects/project-image-1.png' },
+    { src: '/projects/project-image-2.png' },
+    { src: '/projects/project-image-3.png' },
+    { src: '/projects/project-image-4.png' },
+    { src: '/projects/project-image-5.png' },
+    { src: '/projects/project-image-6.png' },
+  ]
+
+  return projects.map((project, index) => {
+    const projectWithImage = {
+      ...project,
+      featuredImage: projectImages[index % projectImages.length].src,
+    }
+
     return {
       params: { project: project.id },
-      props: { project },
+      props: { project: projectWithImage },
     }
   })
 }
 
 interface Props {
-  project: CollectionEntry<'projects'>
+  project: CollectionEntry<'projects'> & { featuredImage: string }
 }
 
 const { project } = Astro.props
 const { Content } = await render(project)
+
+const author = {
+  name: project.data.author,
+  image: '/projects/project-image-1.png',
+  bio: 'Project Creator',
+}
 ---
 
-<DefaultLayout title={project.data.title} description={project.data.body} url={project.data.title}>
-  <div class="container">
-    <div class="mt-12">
-      <Breadcrumbs>
-        <BreadcrumbsItem href="/" label="Home" />
-        <BreadcrumbsItem href="/portfolio" label="Portfolio" />
-        <BreadcrumbsItem currentPage={true} label={project.data.title} />
-      </Breadcrumbs>
-    </div>
-  </div>
+<DefaultLayout title={project.data.title} description={project.data.description} url={project.data.title}>
+  <PageHeader
+    title={project.data.title}
+    subtitle={project.data.description}
+    author={author}
+    bgType="bordered"
+    featuredImage={project.featuredImage}
+  />
   <section class="my-12">
-    <div class="container">
-      <h1>{project.data.title}</h1><br />
-      <p>By author: {project.data.author}</p>
+    <div class="narrow space-content container">
+      <Content />
     </div>
   </section>
   <section class="my-12">
-    <div class="space-content container">
-      <Content />
+    <div class="narrow space-content container">
+      <h2>Share this project</h2>
+      <p>Like this project? Share it with your network!</p>
+      <SocialShares />
     </div>
   </section>
 </DefaultLayout>
 
-<style lang="scss">
-  ul {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: 4rem;
-
-    @media (min-width: 550px) {
-      grid-template-columns: repeat(2, 1fr);
-      grid-gap: 2rem;
-    }
-
-    @media (min-width: 950px) {
-      grid-template-columns: repeat(3, 1fr);
-    }
+<style lang="scss" is:global>
+  .narrow {
+    margin-inline: auto;
+    max-width: 65ch;
   }
 </style>

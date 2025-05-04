@@ -1,6 +1,7 @@
 ---
 import DefaultLayout from '../layouts/DefaultLayout.astro'
 import { Icon } from 'astro-icon/components'
+import PageHeader from '../components/PageHeader.astro'
 import {
   Accordion,
   AccordionItem,
@@ -23,19 +24,15 @@ import {
 } from 'accessible-astro-components'
 ---
 
-<DefaultLayout title="Accessible Components">
+<DefaultLayout title="Accessible components">
   <section class="my-12">
-    <div class="space-content container">
-      <h1>Accessible Components</h1>
-      <p class="text-2xl">
-        This theme has a lot of extra a11y components provided by the <a
-          href="https://github.com/markteekman/accessible-astro-components">Accessible Astro Components</a
-        > NPM package to help you build accessible pages faster. To learn more about the components and how to use them,
-        checkout our <a href="https://accessible-astro.incluud.dev/">documentation website</a>.
-      </p>
-    </div>
+    <PageHeader
+      title="Accessible components"
+      subtitle="This theme has a lot of extra A11Y components provided by the <a href='https://github.com/incluud/accessible-astro-components'>Accessible Astro Components</a> NPM package to help you build accessible pages faster. To learn more about the components and how to use them, checkout our <a href='https://accessible-astro.incluud.dev/'>documentation website</a>. The theme itself ships with many other components you can find in the components folder."
+      bgType="bordered"
+    />
   </section>
-  <section class="mb-12 mt-32">
+  <section class="mt-32 mb-12">
     <div class="container">
       <div class="grid grid-cols-1 gap-32 md:grid-cols-2">
         <div class="space-content">
@@ -158,7 +155,7 @@ import {
           </Breadcrumbs>
           <Breadcrumbs>
             <BreadcrumbsItem href="/" label="Home" hasIcon>
-              <Icon name="ion:home" slot="icon" />
+              <Icon name="lucide:home" slot="icon" />
             </BreadcrumbsItem>
             <BreadcrumbsItem href="/docs" label="Documentation" />
             <BreadcrumbsItem label="Breadcrumbs" currentPage={true} />
@@ -166,26 +163,26 @@ import {
           <Breadcrumbs>
             <BreadcrumbsItem href="/" label="Home">
               <span slot="separator" class="separator" aria-hidden="true">
-                <Icon name="ion:chevron-forward-outline" />
+                <Icon name="lucide:chevron-right" />
               </span>
             </BreadcrumbsItem>
             <BreadcrumbsItem href="/docs" label="Documentation">
               <span slot="separator" class="separator" aria-hidden="true">
-                <Icon name="ion:chevron-forward-outline" />
+                <Icon name="lucide:chevron-right" />
               </span>
             </BreadcrumbsItem>
             <BreadcrumbsItem label="Breadcrumbs" currentPage={true} />
           </Breadcrumbs>
           <Breadcrumbs>
             <BreadcrumbsItem href="/" label="Home" hasIcon>
-              <Icon name="ion:home" slot="icon" />
+              <Icon name="lucide:home" slot="icon" />
               <span slot="separator" class="separator" aria-hidden="true">
-                <Icon name="ion:chevron-forward-outline" />
+                <Icon name="lucide:chevron-right" />
               </span>
             </BreadcrumbsItem>
             <BreadcrumbsItem href="/docs" label="Documentation">
               <span slot="separator" class="separator" aria-hidden="true">
-                <Icon name="ion:chevron-forward-outline" />
+                <Icon name="lucide:chevron-right" />
               </span>
             </BreadcrumbsItem>
             <BreadcrumbsItem label="Breadcrumbs" currentPage={true} />
@@ -199,7 +196,7 @@ import {
             footer="Author name"
           >
             <span slot="meta">
-              <Icon name="ion:time-outline" />
+              <Icon name="lucide:clock" />
               10 min read
             </span>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto quasi nobis optio? Qui in quo accusantium
@@ -208,12 +205,12 @@ import {
           </Card>
         </div>
         <div class="space-content">
-          <h2>DarkMode Toggle</h2>
+          <h2>Dark mode toggle</h2>
           <div class="flex gap-2">
             <DarkMode />
             <DarkMode>
-              <Icon name="ion:bulb" slot="light" />
-              <Icon name="ion:bulb-outline" slot="dark" />
+              <Icon name="lucide:sun" slot="light" />
+              <Icon name="lucide:moon" slot="dark" />
             </DarkMode>
           </div>
         </div>
@@ -242,26 +239,26 @@ import {
         <div class="space-content">
           <h2>Notification</h2>
           <Notification>
-            <Icon name="ion:notifications-outline" /><p><strong>Message:</strong> This is a notification!</p>
+            <Icon name="lucide:bell" /><p><strong>Message:</strong> This is a notification!</p>
           </Notification>
           <Notification role="status" type="info">
-            <Icon name="ion:information-circle-outline" /><p>
+            <Icon name="lucide:info" /><p>
               <strong>Info:</strong> This is a notification of type info.
             </p>
           </Notification>
           <Notification role="status" type="success">
-            <Icon name="ion:checkbox-outline" /><p>
+            <Icon name="lucide:circle-check" /><p>
               <strong>Success:</strong> This is a notification of type success.
             </p>
           </Notification>
           <Notification role="status" type="warning">
-            <Icon name="ion:warning-outline" /><p>
+            <Icon name="lucide:triangle-alert" /><p>
               <strong>Warning:</strong> This is a notification of type warning and goes on multiple lines to see how that
               looks.
             </p>
           </Notification>
           <Notification role="alert" type="error">
-            <Icon name="ion:alert-circle-outline" /><p>
+            <Icon name="lucide:circle-x" /><p>
               <strong>Error:</strong> This is a notification of type error.
             </p>
           </Notification>
@@ -271,7 +268,7 @@ import {
           <Pagination totalPages="200" />
         </div>
         <div class="space-content">
-          <h2>SkipLink</h2>
+          <h2>Skip link</h2>
           <p>
             The SkipLink component becomes visible when you shift+tab to navigate backward through the page, it's the
             first focusable element on the page.
@@ -336,7 +333,7 @@ import {
       </div>
     </div>
   </section>
-  <section class="mb-12 mt-32">
+  <section class="mt-32 mb-12">
     <div class="container">
       <div class="grid grid-cols-1 gap-32 md:grid-cols-2">
         <div class="space-content">

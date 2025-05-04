@@ -1,23 +1,23 @@
 ---
 import ResponsiveToggle from './ResponsiveToggle.astro'
-import { DarkMode } from 'accessible-astro-components'
-import { Image } from 'astro:assets'
-import logo from '../assets/img/logo.svg'
+import Logo from './Logo.astro'
+
+/**
+ * Navigation Component
+ *
+ * @description A component that displays the navigation menu for the website
+ */
 ---
 
 <div id="main-navigation" class="is-desktop py-8">
   <div class="container">
-    <a href="/" class="flex items-center gap-2 !no-underline">
-      <Image src={logo} alt="Your Logo" width="47" height="37" />
-      <span class="font-bold">Accessible Astro</span>
-    </a>
+    <Logo />
     <div class="wrapper">
       <nav class="desktop-menu" aria-label="Main navigation desktop">
         <ul class="menu">
           <slot />
         </ul>
       </nav>
-      <DarkMode />
       <ResponsiveToggle />
     </div>
     <nav class="mobile-menu" aria-label="Main navigation mobile">
@@ -31,23 +31,25 @@ import logo from '../assets/img/logo.svg'
 <script>
   document.addEventListener('astro:page-load', () => {
     // variables
-    const mainNav = document.querySelector('#main-navigation')
-    const mainMenu = mainNav.querySelector('ul')
-    const dropdownMenus = [...document.querySelectorAll('.has-dropdown button')]
+    const mainNav = document.querySelector('#main-navigation') as HTMLElement | null
+    if (!mainNav) return
+
+    const mainMenu = mainNav.querySelector('ul') as HTMLUListElement | null
+    const dropdownMenus = [...document.querySelectorAll('.has-dropdown button')] as HTMLButtonElement[]
 
     // functions
-    const setActiveMenuItem = () => {
+    const setActiveMenuItem = (): void => {
       const mobileDesktopMenus = mainNav.querySelectorAll('nav > ul')
-      const currenPathname = window.location.pathname
+      const currentPathname = window.location.pathname
 
       mobileDesktopMenus.forEach((menu) => {
         const menuItems = [...menu.querySelectorAll('a:not([rel*="external"])')] as HTMLAnchorElement[]
 
         menuItems.forEach((menuItem) => {
-          if (currenPathname.includes(menuItem.pathname.replaceAll('/', '')) && menuItem.textContent !== 'Home') {
+          if (currentPathname.includes(menuItem.pathname.replaceAll('/', '')) && menuItem.textContent !== 'Home') {
             menuItem.classList.add('is-active')
             menuItem.setAttribute('aria-current', 'page')
-          } else if (menuItem.textContent === 'Home' && currenPathname === '/') {
+          } else if (menuItem.textContent === 'Home' && currentPathname === '/') {
             menuItem.classList.add('is-active')
             menuItem.setAttribute('aria-current', 'page')
           }
@@ -55,9 +57,12 @@ import logo from '../assets/img/logo.svg'
       })
     }
 
-    const checkMenuSize = () => {
+    const checkMenuSize = (): void => {
       const mainNavWidth = mainNav.getBoundingClientRect().width
-      const desktopMenuWidth = document.querySelector('.desktop-menu').getBoundingClientRect().width
+      const desktopMenuEl = document.querySelector('.desktop-menu') as HTMLElement | null
+      if (!desktopMenuEl) return
+
+      const desktopMenuWidth = desktopMenuEl.getBoundingClientRect().width
       const logoWidthBuffer = 300
       const totalMenuWidth = Math.round(desktopMenuWidth) + logoWidthBuffer
 
@@ -70,13 +75,14 @@ import logo from '../assets/img/logo.svg'
       }
     }
 
-    const isOutOfViewport = (element) => {
+    const isOutOfViewport = (element: Element): boolean => {
       const elementBounds = element.getBoundingClientRect()
       return elementBounds.right > (window.innerWidth || document.documentElement.clientWidth)
     }
 
-    const openDropdownMenu = (dropdownMenu) => {
-      const dropdownList = dropdownMenu.parentNode.querySelector('ul')
+    const openDropdownMenu = (dropdownMenu: HTMLButtonElement): void => {
+      const dropdownList = dropdownMenu.parentNode?.querySelector('ul') as HTMLUListElement | null
+      if (!dropdownList) return
 
       dropdownMenu.classList.add('show')
       dropdownMenu.setAttribute('aria-expanded', 'true')
@@ -86,51 +92,52 @@ import logo from '../assets/img/logo.svg'
       }
     }
 
-    const closeDropdownMenu = (dropdownMenu) => {
+    const closeDropdownMenu = (dropdownMenu: HTMLButtonElement): void => {
       dropdownMenu.classList.remove('show')
       dropdownMenu.setAttribute('aria-expanded', 'false')
     }
 
-    const closeAllDropdownMenus = () => {
+    const closeAllDropdownMenus = (): void => {
       for (let i = 0; i < dropdownMenus.length; i++) {
         closeDropdownMenu(dropdownMenus[i])
       }
     }
 
-    const toggleDropdownMenu = (event) => {
-      if (event.target.getAttribute('aria-expanded') === 'false') {
+    const toggleDropdownMenu = (event: MouseEvent): void => {
+      const target = event.target as HTMLButtonElement
+      if (target.getAttribute('aria-expanded') === 'false') {
         closeAllDropdownMenus()
-        openDropdownMenu(event.target)
+        openDropdownMenu(target)
       } else {
-        closeDropdownMenu(event.target)
+        closeDropdownMenu(target)
       }
     }
 
     // execution
     mainMenu &&
-      mainMenu.addEventListener('keydown', (event) => {
+      mainMenu.addEventListener('keydown', (event: KeyboardEvent) => {
         const element = event.target as Element
         const currentMenuItem = element.closest('li')
-        const menuItems = [...mainMenu.querySelectorAll('.menu-item')]
-        const currentDropdownMenu = element.closest('.has-dropdown button')
-        const currentDropdownMenuItem = element.closest('.has-dropdown li')
-        const currentIndex = menuItems.findIndex((item) => item === currentMenuItem)
+        const menuItems = [...mainMenu.querySelectorAll('.menu-item')] as HTMLLIElement[]
+        const currentDropdownMenu = element.closest('.has-dropdown button') as HTMLButtonElement | null
+        const currentDropdownMenuItem = element.closest('.has-dropdown li') as HTMLLIElement | null
+        const currentIndex = currentMenuItem ? menuItems.findIndex((item) => item === currentMenuItem) : -1
 
         const key = event.key
-        let targetItem
+        let targetItem: Element | null = null
 
         if (key === 'ArrowRight') {
-          if (menuItems.indexOf(currentMenuItem) === menuItems.length - 1) {
+          if (currentMenuItem && menuItems.indexOf(currentMenuItem as HTMLLIElement) === menuItems.length - 1) {
             targetItem = menuItems[0]
-          } else {
+          } else if (currentMenuItem) {
             targetItem = menuItems[currentIndex + 1]
           }
         }
 
         if (key === 'ArrowLeft') {
-          if (menuItems.indexOf(currentMenuItem) === 0) {
+          if (currentMenuItem && menuItems.indexOf(currentMenuItem as HTMLLIElement) === 0) {
             targetItem = menuItems[menuItems.length - 1]
-          } else {
+          } else if (currentMenuItem) {
             targetItem = menuItems[currentIndex - 1]
           }
         }
@@ -140,12 +147,15 @@ import logo from '../assets/img/logo.svg'
         }
 
         if (currentDropdownMenu) {
-          const firstDropdownItem = currentDropdownMenu.nextElementSibling.querySelector('li')
+          const nextElement = currentDropdownMenu.nextElementSibling as Element | null
+          if (nextElement) {
+            const firstDropdownItem = nextElement.querySelector('li')
 
-          if (key === 'ArrowDown') {
-            event.preventDefault()
-            openDropdownMenu(currentDropdownMenu)
-            targetItem = firstDropdownItem
+            if (key === 'ArrowDown') {
+              event.preventDefault()
+              openDropdownMenu(currentDropdownMenu)
+              targetItem = firstDropdownItem
+            }
           }
 
           if (key === 'Escape') {
@@ -154,60 +164,68 @@ import logo from '../assets/img/logo.svg'
         }
 
         if (currentDropdownMenuItem) {
-          const currentDropdownList = currentDropdownMenuItem.parentNode
-          const dropdownMenuItems = [...currentDropdownList.querySelectorAll('li')]
-          const currentIndex = dropdownMenuItems.findIndex((item) => item === currentDropdownMenuItem)
+          const currentDropdownList = currentDropdownMenuItem.parentNode as Element | null
+          if (currentDropdownList) {
+            const dropdownMenuItems = [...currentDropdownList.querySelectorAll('li')] as HTMLLIElement[]
+            const currentIndex = dropdownMenuItems.findIndex((item) => item === currentDropdownMenuItem)
 
-          if (key === 'ArrowDown') {
-            event.preventDefault()
+            if (key === 'ArrowDown') {
+              event.preventDefault()
 
-            if (dropdownMenuItems.indexOf(currentDropdownMenuItem as HTMLLIElement) === dropdownMenuItems.length - 1) {
-              targetItem = dropdownMenuItems[0]
-            } else {
-              targetItem = dropdownMenuItems[currentIndex + 1]
+              if (dropdownMenuItems.indexOf(currentDropdownMenuItem) === dropdownMenuItems.length - 1) {
+                targetItem = dropdownMenuItems[0]
+              } else {
+                targetItem = dropdownMenuItems[currentIndex + 1]
+              }
             }
-          }
 
-          if (key === 'ArrowUp') {
-            event.preventDefault()
+            if (key === 'ArrowUp') {
+              event.preventDefault()
 
-            if (dropdownMenuItems.indexOf(currentDropdownMenuItem as HTMLLIElement) === 0) {
-              targetItem = dropdownMenuItems[dropdownMenuItems.length - 1]
-            } else {
-              targetItem = dropdownMenuItems[currentIndex - 1]
+              if (dropdownMenuItems.indexOf(currentDropdownMenuItem) === 0) {
+                targetItem = dropdownMenuItems[dropdownMenuItems.length - 1]
+              } else {
+                targetItem = dropdownMenuItems[currentIndex - 1]
+              }
             }
-          }
 
-          if (key === 'Escape') {
-            const currentDropdownMenu = (currentDropdownList as Element).previousElementSibling
-            targetItem = currentDropdownMenu.parentNode
-            closeAllDropdownMenus()
-          }
+            if (key === 'Escape') {
+              const currentDropdownMenu = currentDropdownList.previousElementSibling as HTMLButtonElement | null
+              if (currentDropdownMenu) {
+                targetItem = currentDropdownMenu.parentElement
+                closeAllDropdownMenus()
+              }
+            }
 
-          if (key === 'Tab') {
-            const currentDropdownMenu = (currentDropdownList as Element).previousElementSibling
-
-            if (dropdownMenuItems.indexOf(currentDropdownMenuItem as HTMLLIElement) === dropdownMenuItems.length - 1) {
-              closeDropdownMenu(currentDropdownMenu)
+            if (key === 'Tab') {
+              const currentDropdownMenu = currentDropdownList.previousElementSibling as HTMLButtonElement | null
+              if (currentDropdownMenu) {
+                if (dropdownMenuItems.indexOf(currentDropdownMenuItem) === dropdownMenuItems.length - 1) {
+                  closeDropdownMenu(currentDropdownMenu)
+                }
+              }
             }
           }
         }
 
         if (targetItem) {
-          targetItem.querySelector('a, button, input').focus()
+          const focusableElement = targetItem.querySelector('a, button, input') as HTMLElement | null
+          if (focusableElement) {
+            focusableElement.focus()
+          }
         }
       })
 
     dropdownMenus &&
       dropdownMenus.forEach((dropdownMenu) => {
-        dropdownMenu.addEventListener('click', toggleDropdownMenu)
+        dropdownMenu.addEventListener('click', toggleDropdownMenu as EventListener)
       })
 
     setActiveMenuItem()
     checkMenuSize()
 
     window.addEventListener('resize', checkMenuSize)
-    window.addEventListener('click', (event) => {
+    window.addEventListener('click', (event: MouseEvent) => {
       const element = event.target as Element
       if (!element.hasAttribute('aria-haspopup') && !element.classList.contains('submenu-item')) {
         closeAllDropdownMenus()
@@ -217,8 +235,7 @@ import logo from '../assets/img/logo.svg'
 </script>
 
 <style lang="scss" is:global>
-  @use '../assets/scss/base/breakpoint' as *;
-  @use '../assets/scss/base/outline' as *;
+  @use '../assets/scss/base/mixins' as *;
 
   #main-navigation {
     > .container {
@@ -236,10 +253,6 @@ import logo from '../assets/img/logo.svg'
       .mobile-menu {
         display: none;
       }
-
-      .darkmode-toggle {
-        margin-top: -6px;
-      }
     }
 
     &.is-mobile {
@@ -255,40 +268,41 @@ import logo from '../assets/img/logo.svg'
 
       .desktop-menu {
         position: absolute;
-        left: 0;
         visibility: hidden;
         z-index: -99;
+        inset-inline-start: 0;
       }
 
       .responsive-toggle {
-        display: block;
+        display: flex;
+        align-items: center;
+        gap: var(--space-2xs);
       }
     }
 
     .wrapper {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: var(--space-m);
+    }
+
+    a,
+    button {
+      color: var(--foreground-color);
     }
 
     nav {
       > ul {
         display: flex;
-        gap: 1.5rem;
+        gap: var(--space-m);
         list-style-type: none;
 
-        a,
-        button {
-          font-size: 1.125rem;
-          line-height: 1.6875rem;
-          text-decoration: none;
-        }
-
         a:hover,
-        a:focus,
+        a:focus-visible,
         .is-active,
+        button[aria-expanded='true'],
         .has-dropdown > button:hover,
-        .has-dropdown > button:focus {
+        .has-dropdown > button:focus-visible {
           text-decoration: underline;
           text-decoration-style: wavy;
           text-decoration-thickness: 1px;
@@ -298,27 +312,48 @@ import logo from '../assets/img/logo.svg'
         .is-active {
           font-weight: bold;
         }
+
+        .highlight a {
+          display: inline-flex;
+          align-items: center;
+          gap: var(--space-2xs);
+          transition: all var(--animation-speed-fast) var(--cubic-bezier);
+          margin-block-start: calc(var(--space-4xs) * -1);
+          border: 1px solid var(--foreground-color);
+          border-radius: var(--radius-large);
+          padding: var(--space-4xs) var(--space-2xs);
+          text-decoration: none;
+
+          &:where(:hover, :focus-visible) {
+            background-color: var(--foreground-color);
+            color: var(--background-color) !important;
+          }
+        }
       }
     }
 
     .mobile-menu {
       flex-basis: 100%;
-      padding: 2rem 0;
+      margin-block-start: var(--space-m);
+      border: 1px solid var(--border-color-subtle);
+      border-radius: var(--radius-l);
+      padding: var(--space-m);
 
       > ul {
         flex-direction: column;
+        align-items: flex-start;
 
         ul {
           position: relative;
-          margin-top: 1rem;
+          margin-block-start: var(--space-m);
         }
       }
 
       a,
       button {
         display: block;
-        padding: 0.5rem 0;
-        width: 100%;
+        padding: var(--space-2xs) 0;
+        inline-size: 100%;
       }
     }
 
@@ -328,41 +363,16 @@ import logo from '../assets/img/logo.svg'
       > button {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        margin-top: -1px;
-        border: none;
-        padding: 0;
-        color: var(--action-color);
+        gap: var(--space-4xs);
+        margin-block-start: -1px;
 
-        &:hover {
-          color: var(--action-color-state);
-
-          &::after {
-            border-color: var(--action-color-state);
-          }
-        }
-
-        &::after {
-          transform: rotate(135deg);
-          margin-top: -0.25rem;
-          border-width: 0.2em 0.2em 0 0;
-          border-style: solid;
-          border-color: var(--action-color);
-          width: 0.85rem;
-          height: 0.75em;
-          content: '';
+        svg {
+          transition: all var(--animation-speed-instant) var(--cubic-bezier);
         }
 
         &.show {
-          &::after {
-            transform: rotate(-45deg);
-            margin-top: 0.25rem;
-          }
-
-          ~ ul {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+          svg {
+            scale: -1;
           }
         }
       }
@@ -370,16 +380,38 @@ import logo from '../assets/img/logo.svg'
       ul {
         display: none;
         position: absolute;
-        top: 125%;
-        right: 0;
-        bottom: auto;
-        left: 0;
+        flex-direction: column;
+        gap: var(--space-2xs);
+        translate: 0 1rem;
+        opacity: 0;
         z-index: 100;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-        border: 2px solid black;
-        background-color: var(--neutral-background);
-        padding: 1rem;
-        min-width: 260px;
+        inset-block-start: 125%;
+        inset-inline-end: 0;
+        inset-inline-start: 0;
+        box-shadow: var(--elevation-4);
+        border: 2px solid var(--border-color-subtle);
+        border-radius: var(--radius-l);
+        background-color: var(--background-color);
+        padding: var(--space-m);
+        min-inline-size: 275px;
+
+        @media (prefers-reduced-motion: no-preference) {
+          transition-behavior: allow-discrete;
+          transition-duration: var(--animation-speed-fast);
+          transition-property: display, opacity, translate;
+          transition-timing-function: var(--cubic-bezier);
+        }
+      }
+
+      > button.show ~ ul {
+        display: flex;
+        translate: 0;
+        opacity: 1;
+
+        @starting-style {
+          translate: 0 1rem;
+          opacity: 0;
+        }
       }
     }
 
@@ -388,21 +420,12 @@ import logo from '../assets/img/logo.svg'
       padding: 0;
 
       .icon {
-        margin-top: 4px;
         inline-size: 30px;
         block-size: 30px;
       }
 
-      svg path {
-        fill: var(--action-color);
-      }
-
-      &:hover {
+      &:where(:hover, :focus-visible) {
         box-shadow: none;
-
-        svg path {
-          fill: var(--action-color-state);
-        }
       }
 
       &:focus {
