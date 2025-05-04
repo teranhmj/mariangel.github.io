@@ -40,16 +40,16 @@ import Logo from './Logo.astro'
     // functions
     const setActiveMenuItem = (): void => {
       const mobileDesktopMenus = mainNav.querySelectorAll('nav > ul')
-      const currenPathname = window.location.pathname
+      const currentPathname = window.location.pathname
 
       mobileDesktopMenus.forEach((menu) => {
         const menuItems = [...menu.querySelectorAll('a:not([rel*="external"])')] as HTMLAnchorElement[]
 
         menuItems.forEach((menuItem) => {
-          if (currenPathname.includes(menuItem.pathname.replaceAll('/', '')) && menuItem.textContent !== 'Home') {
+          if (currentPathname.includes(menuItem.pathname.replaceAll('/', '')) && menuItem.textContent !== 'Home') {
             menuItem.classList.add('is-active')
             menuItem.setAttribute('aria-current', 'page')
-          } else if (menuItem.textContent === 'Home' && currenPathname === '/') {
+          } else if (menuItem.textContent === 'Home' && currentPathname === '/') {
             menuItem.classList.add('is-active')
             menuItem.setAttribute('aria-current', 'page')
           }
@@ -192,7 +192,7 @@ import Logo from './Logo.astro'
             if (key === 'Escape') {
               const currentDropdownMenu = currentDropdownList.previousElementSibling as HTMLButtonElement | null
               if (currentDropdownMenu) {
-                targetItem = currentDropdownMenu.parentNode
+                targetItem = currentDropdownMenu.parentElement
                 closeAllDropdownMenus()
               }
             }

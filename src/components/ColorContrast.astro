@@ -189,10 +189,12 @@ const themes: Theme[] = [
     } {
       for (const level of wcagLevels) {
         if (ratio >= level.ratio) {
+          const isPass = level.name !== 'Fail'
+
           return {
             name: level.name,
             className: level.className,
-            passes: level.name !== 'Fail' && level.name !== 'AA Large',
+            passes: isPass,
             ratio: ratio.toFixed(2),
           }
         }
