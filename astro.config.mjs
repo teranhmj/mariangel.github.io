@@ -4,7 +4,6 @@ import compress from 'astro-compress'
 import icon from 'astro-icon'
 import tailwindcss from '@tailwindcss/vite'
 import { fileURLToPath } from 'url'
-import path from 'path'
 
 // https://astro.build/config
 export default defineConfig({
