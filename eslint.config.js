@@ -116,15 +116,4 @@ export default [
       '@typescript-eslint/no-non-null-assertion': 'off',
     },
   },
-
-  // TypeScript in Astro files
-  {
-    files: ['**/*.astro/*.js', '*.astro/*.js'],
-    plugins: {
-      '@typescript-eslint': tseslint,
-    },
-    languageOptions: {
-      parser: tsParser,
-    },
-  },
 ]
